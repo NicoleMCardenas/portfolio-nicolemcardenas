@@ -6,7 +6,7 @@ const navigation = [
   { name: "Proyectos", href: "/projects" },
   { name: "Contacto", href: "/contact" },
   { name: "GitHub", href: "https://github.com/NicoleMCardenas", external: true },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/nicolemcardenas/", external: true },
+  { name: "LinkedIn", href: "www.linkedin.com/in/nicolemorcar", external: true },
 ];
 
 export default function Home() {
