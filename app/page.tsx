@@ -7,7 +7,7 @@ const navigation = [
   { name: "Proyectos", href: "/projects" },
   { name: "Contacto", href: "/contact" },
   { name: "GitHub", href: "https://github.com/NicoleMCardenas", external: true },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/nicolemorcar", external: true }, // ← link corregido
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/nicolemorcar", external: true }, //
 ];
 
 export default function Home() {
@@ -36,8 +36,11 @@ export default function Home() {
 
       {/* HERO */}
       <h1 className="py-3.5 px-0.5 z-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display text-center leading-tight bg-clip-text">
-        👋 Welcome to my Portfolio!
+        Nicole Morelos Cárdenas
       </h1>
+      <h2 className="py-3.5 px-0.5 z-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display text-center leading-tight bg-clip-text">
+        👋 Welcome to my Portfolio!
+      </h2>
 
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 
