@@ -5,9 +5,9 @@ import Particles from "./components/particles";
 
 export default function Home() {
   return (
-    <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-800/20 to-black text-center px-6">
+    <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-800/20 to-black px-6">
 
-      {/* 🔗 NAVBAR SUPERIOR IZQUIERDA */}
+      {/* NAV superior izquierda */}
       <nav className="absolute top-6 left-6 flex items-center gap-5 text-zinc-400 text-sm">
         <Link
           href="https://www.linkedin.com/in/nicolemorcar"
@@ -25,45 +25,65 @@ export default function Home() {
         >
           GitHub
         </Link>
-        <Link
-          href="/projects"
-          className="hover:text-white transition"
-        >
+        <Link href="/projects" className="hover:text-white transition">
           Projects
         </Link>
       </nav>
 
       <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
 
-      {/* ✨ HERO */}
-      <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold text-white mb-4 animate-fade-in">
-        Nicole Morelos Cárdenas
-      </h1>
+      {/* HERO layout */}
+      <div className="relative z-10 grid items-center gap-10 text-center md:text-left md:grid-cols-2 max-w-6xl w-full">
+        {/* Texto */}
+        <div className="order-2 md:order-1">
+          {/* Nombre con efecto original */}
+          <h1 className="py-3.5 px-0.5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display leading-tight bg-clip-text">
+            Nicole Morelos Cárdenas
+          </h1>
 
-      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-gray-400 mb-4 animate-fade-in">
-        Full-Stack Developer
-      </h2>
+          {/* Rol principal */}
+          <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-gray-400">
+            Full-Stack Developer
+          </h2>
 
-      <p className="text-lg sm:text-xl text-zinc-400 mb-6 animate-fade-in">
-        Backend Specialist | API Architecture | Marketing & Innovation Strategy
-      </p>
+          {/* Subrol */}
+          <p className="mt-2 text-base sm:text-lg text-zinc-400">
+            Backend Specialist · API Architecture · Marketing & Innovation Strategy
+          </p>
 
-      {/* 🖼️ IMAGEN */}
-      <div className="w-[280px] sm:w-[340px] md:w-[420px] mb-8 animate-fade-in">
-        <img
-          src="https://www.simplilearn.com/ice9/free_resources_article_thumb/is_web_development_a_good_career.jpg"
-          alt="Web Developer Illustration"
-          className="rounded-xl shadow-lg mx-auto"
-        />
+          {/* Párrafo solicitado */}
+          <div className="mt-5">
+            <p className="text-base text-zinc-300 leading-relaxed">
+              I’m a developer who blends technical precision with strategic thinking and creative execution.<br />
+              My focus is on building <strong>scalable, secure, and well-designed APIs</strong> using{" "}
+              <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and maintainable systems.<br />
+              Beyond code, I bring a background in <strong>marketing and innovation strategy</strong>, helping transform technical
+              products into meaningful digital experiences.<br />
+              For me, technology isn’t just about functionality — it’s about{" "}
+              <strong>creating impact, connection, and growth</strong> through every line of code.
+            </p>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-6">
+            <Link
+              href="/contact"
+              className="inline-block px-6 py-3 bg-white text-black font-medium rounded-md shadow-sm hover:bg-zinc-200 transition"
+            >
+              Let’s Build Something Together 🚀 🚀
+            </Link>
+          </div>
+        </div>
+
+        {/* Imagen pro (oscura, combina con el tema) */}
+        <div className="order-1 md:order-2 flex justify-center">
+          <img
+            src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+            alt="Web development — dark workspace"
+            className="w-[300px] sm:w-[380px] md:w-[460px] rounded-xl shadow-lg border border-white/10 object-cover"
+          />
+        </div>
       </div>
-
-      {/* 🚀 BOTÓN CTA */}
-      <Link
-        href="/contact"
-        className="px-6 py-3 bg-white text-black font-medium rounded-md shadow-sm hover:bg-zinc-200 transition"
-      >
-         Let’s Build Something Together 🚀 🚀
-      </Link>
     </div>
   );
 }
