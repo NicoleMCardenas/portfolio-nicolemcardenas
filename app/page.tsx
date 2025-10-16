@@ -35,12 +35,41 @@ export default function Home() {
       <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
 
       {/* HERO */}
-      <h1 className="py-3.5 px-0.5 z-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display text-center leading-tight bg-clip-text">
-        Nicole Morelos Cárdenas
-      </h1>
-      <h2 className="py-3.5 px-0.5 z-10 text-4xl sm:text-5xl md:text-7xl lg:text-8xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display text-center leading-tight bg-clip-text">
-        👋 Welcome to my Portfolio!
-      </h2>
+{/* HERO */}
+<div className="flex flex-col md:flex-row items-center justify-center gap-12 text-center md:text-left px-8 md:px-20">
+  {/* LEFT TEXT SECTION */}
+  <div className="max-w-2xl animate-fade-in">
+    <h2 className="text-lg text-zinc-400 mb-2">Hi, I’m <span className="text-white font-semibold">Nicole</span> 👋</h2>
+
+    <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight text-white mb-4">
+      Full-Stack Developer <br /> & Backend Specialist
+    </h1>
+
+    <p className="text-zinc-300 text-base sm:text-lg leading-relaxed mb-8">
+      I combine <strong>backend precision</strong> with <strong>creative problem-solving</strong> to build
+      scalable, secure, and human-centered digital products.<br />
+      My background in <strong>marketing and innovation strategy</strong> helps bridge the gap between
+      technology, business goals, and user experience.
+    </p>
+
+    <Link
+      href="/contact"
+      className="inline-block px-6 py-3 bg-white text-black font-medium rounded-md shadow-sm hover:bg-zinc-200 transition"
+    >
+      Let’s Build Something Together 🚀
+    </Link>
+  </div>
+
+  {/* RIGHT IMAGE / ILLUSTRATION */}
+  <div className="hidden md:block animate-fade-in">
+    <img
+      src="/developer-illustration.svg"
+      alt="Developer Illustration"
+      className="w-[380px] md:w-[460px] drop-shadow-lg"
+    />
+  </div>
+</div>
+
 
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
 
