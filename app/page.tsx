@@ -23,7 +23,8 @@ export default function Home() {
       title: "Databases",
       items: [
         { label: "PostgreSQL", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { label: "Neon", src: "https://cdn.simpleicons.org/neon/00E599" },
+{ label: "Neon", src: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/neon.svg" },
+
         { label: "Railway DB", src: "https://cdn.simpleicons.org/railway/ffffff" },
       ],
     },
@@ -31,6 +32,7 @@ export default function Home() {
       title: "Frontend & UI",
       items: [
         { label: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+        { label: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
         { label: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs/ffffff" },
         { label: "TailwindCSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
       ],
