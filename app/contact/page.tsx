@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { Github, Linkedin, Instagram } from "lucide-react";
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -15,9 +16,21 @@ export default function Contact() {
   };
 
   const socials = [
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/nicolemorcar", icon: "💼" },
-    { label: "Instagram", href: "https://www.instagram.com/nicolemorcar/", icon: "📸" },
-    { label: "GitHub", href: "https://github.com/NicoleMCardenas", icon: "💻" },
+    {
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/nicolemorcar",
+      icon: <Linkedin className="h-6 w-6 text-zinc-400 group-hover:text-white transition" />,
+    },
+    {
+      label: "Instagram",
+      href: "https://www.instagram.com/nicolemorcar/",
+      icon: <Instagram className="h-6 w-6 text-zinc-400 group-hover:text-white transition" />,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/NicoleMCardenas",
+      icon: <Github className="h-6 w-6 text-zinc-400 group-hover:text-white transition" />,
+    },
   ];
 
   return (
@@ -83,28 +96,34 @@ export default function Contact() {
           </button>
         </form>
 
-        {/* Contact Info & Socials */}
-        <div className="flex flex-col justify-between gap-8">
-          {/* Location */}
+        {/* Contact Info & Redes */}
+        <div className="flex flex-col justify-between gap-10">
           <div>
             <h3 className="text-xl font-semibold mb-2 text-white">Contact Info</h3>
-            <p className="text-zinc-400">📍 México</p>
+            <p className="text-zinc-400 flex items-center gap-2">
+              <span>📍</span> México
+            </p>
           </div>
 
-          {/* Social Icons */}
           <div>
             <h3 className="text-xl font-semibold mb-4 text-white">Find me on</h3>
-            <div className="flex items-center gap-8">
+
+            <div className="flex items-center gap-6">
               {socials.map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex flex-col items-center justify-center text-center text-zinc-300 hover:text-white transition transform hover:scale-105"
+                  className="group relative flex flex-col items-center justify-center text-center"
                 >
-                  <div className="text-4xl mb-2">{social.icon}</div>
-                  <span className="text-sm">{social.label}</span>
+                  <div className="p-4 rounded-full bg-zinc-800/40 border border-zinc-700 hover:border-white/60 shadow-md hover:shadow-white/10 transition-all duration-300">
+                    {social.icon}
+                  </div>
+                  <span className="text-sm text-zinc-400 mt-2 group-hover:text-white transition">
+                    {social.label}
+                  </span>
+                  <span className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 rounded-full blur-md transition" />
                 </a>
               ))}
             </div>
