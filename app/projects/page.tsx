@@ -12,7 +12,7 @@ const redis = Redis.fromEnv();
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  // 🔹 Obtenemos las vistas desde Upstash Redis
+  // 🔹 Get project views from Upstash Redis
   const views = (
     await redis.mget<number[]>(
       ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":")),
@@ -22,30 +22,30 @@ export default async function ProjectsPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  // 🔹 Prioridad personalizada (ajusta con tus slugs)
+  // 🔹 Prioritize your own featured projects
   const myPriority = ["trainup", "portfolio", "madre-aroma"];
 
-  // 🔹 Filtramos los proyectos publicados
+  // 🔹 Only published projects
   const published = allProjects.filter((p) => p.published);
 
-  // 🔹 Orden descendente por fecha
+  // 🔹 Sort by date (newest first)
   const ordered = [...published].sort(
     (a, b) =>
       new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
       new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
   );
 
-  // 🔹 Featured será TrainUp o el primero en prioridad
+  // 🔹 Featured project (TrainUp if found)
   const featured =
     ordered.find((p) => myPriority.includes(p.slug)) ?? ordered[0];
 
-  // 🔹 Siguientes dos proyectos destacados
+  // 🔹 Next two projects
   const top2 = ordered.find((p) => p.slug !== featured?.slug);
   const top3 = ordered.find(
     (p) => p.slug !== featured?.slug && p.slug !== top2?.slug
   );
 
-  // 🔹 El resto va al grid inferior
+  // 🔹 Remaining projects for the grid
   const sorted = ordered.filter(
     (p) => p.slug !== featured?.slug && p.slug !== top2?.slug && p.slug !== top3?.slug
   );
@@ -61,14 +61,14 @@ export default async function ProjectsPage() {
             Projects
           </h2>
           <p className="mt-4 text-zinc-400">
-            A selection of applications I’ve built — full-stack projects with
+            A selection of applications I’ve built — full-stack projects using
             NestJS, PostgreSQL, and Next.js.
           </p>
         </div>
 
         <div className="w-full h-px bg-zinc-800" />
 
-        {/* Featured + Top 2/3 */}
+        {/* Featured + Top 2 */}
         <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
           {featured && (
             <Card>
@@ -115,6 +115,7 @@ export default async function ProjectsPage() {
             </Card>
           )}
 
+          {/* Top 2 & 3 */}
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
             {[top2, top3].filter(Boolean).map((project) => (
               <Card key={(project as any).slug}>
@@ -129,7 +130,7 @@ export default async function ProjectsPage() {
 
         <div className="hidden w-full h-px md:block bg-zinc-800" />
 
-        {/* Rest of Projects */}
+        {/* Remaining projects */}
         <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
           <div className="grid grid-cols-1 gap-4">
             {sorted
@@ -172,4 +173,3 @@ export default async function ProjectsPage() {
     </div>
   );
 }
-
