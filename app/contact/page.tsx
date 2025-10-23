@@ -4,15 +4,28 @@ import Link from "next/link";
 import { Github, Linkedin, Instagram } from "lucide-react";
 
 export default function Contact() {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    subject: "",
+    message: "",
+  });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = `mailto:nicmocard@gmail.com?subject=Message from ${formData.name}&body=${formData.message}`;
+    const to = "nicmocard@gmail.com";
+    const subject = `${formData.subject} — from ${formData.name}`;
+    const body = `Hi Nicole,%0D%0A%0D%0A${encodeURIComponent(
+      formData.message
+    )}%0D%0A%0D%0A— ${encodeURIComponent(formData.name)}`;
+    window.location.href = `mailto:${to}?subject=${encodeURIComponent(
+      subject
+    )}&body=${body}`;
   };
 
   const socials = [
@@ -48,7 +61,7 @@ export default function Contact() {
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-6xl w-full">
-        {/* Form Section */}
+        {/* Form */}
         <form
           onSubmit={handleSubmit}
           className="bg-zinc-800/40 rounded-xl border border-zinc-700 p-8 flex flex-col gap-5 hover:border-zinc-500 transition"
@@ -68,10 +81,10 @@ export default function Contact() {
               required
             />
             <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
+              type="text"
+              name="subject"
+              placeholder="Subject"
+              value={formData.subject}
               onChange={handleChange}
               className="p-3 bg-zinc-900 border border-zinc-700 rounded-md text-white focus:outline-none focus:border-zinc-400"
               required
@@ -96,12 +109,15 @@ export default function Contact() {
           </button>
         </form>
 
-        {/* Contact Info & Redes */}
+        {/* Contact Info & Socials */}
         <div className="flex flex-col justify-between gap-10">
           <div>
             <h3 className="text-xl font-semibold mb-2 text-white">Contact Info</h3>
-            <p className="text-zinc-400 flex items-center gap-2">
-              <span>📍</span> México
+            <p className="text-zinc-300">
+              Open to new opportunities · Available for relocation
+            </p>
+            <p className="text-zinc-400 mt-2 flex items-center gap-2">
+              <span>📍</span> Mexico
             </p>
           </div>
 
