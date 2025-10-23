@@ -11,12 +11,12 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    window.location.href = `mailto:nicolemoreloscardenas@gmail.com?subject=Message from ${formData.name}&body=${formData.message}`;
+    window.location.href = `mailto:nicmocard@gmail.com?subject=Message from ${formData.name}&body=${formData.message}`;
   };
 
   const socials = [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/nicolemorcar", icon: "💼" },
-    { label: "Instagram", href: "https://www.instagram.com/nicolemorelos.c/", icon: "📸" },
+    { label: "Instagram", href: "https://www.instagram.com/nicolemorcar/", icon: "📸" },
     { label: "GitHub", href: "https://github.com/NicoleMCardenas", icon: "💻" },
   ];
 
