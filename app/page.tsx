@@ -44,13 +44,14 @@ export default function Home() {
           </Link>
         </nav>
 
+        {/* Fondo animado */}
         <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
 
-        {/* Contenido del hero */}
+        {/* Contenido principal del Hero */}
         <div className="relative z-10 grid items-center gap-10 text-center md:text-left md:grid-cols-2 max-w-6xl w-full">
           {/* Texto */}
           <div className="order-2 md:order-1">
-            {/* Nombre con efecto original */}
+            {/* Nombre con efecto original del template */}
             <h1 className="py-3.5 px-0.5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display leading-tight bg-clip-text">
               Nicole Morelos Cárdenas
             </h1>
@@ -94,19 +95,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ABOUT con foto + texto + CTA */}
+      {/* ABOUT con tu foto y texto */}
       <section id="about" className="relative z-10 w-full bg-black/60 backdrop-blur-sm border-t border-white/5">
         <div className="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          {/* Foto (sube tu imagen a /public/me.jpg) */}
+          {/* Foto izquierda */}
           <div className="flex justify-center md:justify-start">
             <img
-              src="/me.jpg"
+              src="/profile.jpg"
               alt="Nicole Morelos Cárdenas"
               className="w-[240px] sm:w-[280px] md:w-[320px] rounded-2xl shadow-xl object-cover border border-white/10"
             />
           </div>
 
-          {/* Texto About */}
+          {/* Texto derecha */}
           <div>
             <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">About Me</h3>
             <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
@@ -150,3 +151,4 @@ export default function Home() {
     </>
   );
 }
+
