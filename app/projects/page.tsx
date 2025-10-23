@@ -12,63 +12,53 @@ const redis = Redis.fromEnv();
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  // 🔹 Get project views from Upstash Redis
+  // Pageviews desde Upstash
   const views = (
     await redis.mget<number[]>(
-      ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":")),
+      ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":"))
     )
   ).reduce((acc, v, i) => {
     acc[allProjects[i].slug] = v ?? 0;
     return acc;
   }, {} as Record<string, number>);
 
-  // 🔹 Prioritize your own featured projects
-  const myPriority = ["trainup", "portfolio", "madre-aroma"];
+  // Orden base por fecha (desc) y solo publicados
+  const published = allProjects
+    .filter((p) => p.published)
+    .sort(
+      (a, b) =>
+        new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
+        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
+    );
 
-  // 🔹 Only published projects
-  const published = allProjects.filter((p) => p.published);
-
-  // 🔹 Sort by date (newest first)
-  const ordered = [...published].sort(
-    (a, b) =>
-      new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
-      new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
-  );
-
-  // 🔹 Featured project (TrainUp if found)
+  // Destacado: prioriza "trainup" si existe; si no, usa el primero
   const featured =
-    ordered.find((p) => myPriority.includes(p.slug)) ?? ordered[0];
+    published.find((p) => p.slug === "trainup") ?? published[0];
 
-  // 🔹 Next two projects
-  const top2 = ordered.find((p) => p.slug !== featured?.slug);
-  const top3 = ordered.find(
-    (p) => p.slug !== featured?.slug && p.slug !== top2?.slug
-  );
+  // Siguientes dos “top”
+  const rest = published.filter((p) => p.slug !== featured.slug);
+  const top2 = rest[0];
+  const top3 = rest[1];
 
-  // 🔹 Remaining projects for the grid
-  const sorted = ordered.filter(
-    (p) => p.slug !== featured?.slug && p.slug !== top2?.slug && p.slug !== top3?.slug
-  );
+  // Resto para la grilla
+  const sorted = rest.slice(2);
 
   return (
     <div className="relative pb-16">
       <Navigation />
-
-      {/* Header */}
       <div className="px-6 pt-20 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
             Projects
           </h2>
           <p className="mt-4 text-zinc-400">
-            A selection of applications I’ve built — full-stack projects using
-            NestJS, PostgreSQL, and Next.js.
+            Some of the projects are from work and some are on my own time.
           </p>
         </div>
 
         <div className="w-full h-px bg-zinc-800" />
 
-        {/* Featured + Top 2 */}
+        {/* Bloque destacado + dos secundarios */}
         <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
           {featured && (
             <Card>
@@ -100,11 +90,9 @@ export default async function ProjectsPage() {
                   >
                     {featured.title}
                   </h2>
-
                   <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-                    {featured.summary ?? featured.description}
+                    {featured.description}
                   </p>
-
                   <div className="absolute bottom-4 md:bottom-8">
                     <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
                       Read more <span aria-hidden="true">&rarr;</span>
@@ -115,14 +103,10 @@ export default async function ProjectsPage() {
             </Card>
           )}
 
-          {/* Top 2 & 3 */}
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
             {[top2, top3].filter(Boolean).map((project) => (
-              <Card key={(project as any).slug}>
-                <Article
-                  project={project as any}
-                  views={views[(project as any).slug] ?? 0}
-                />
+              <Card key={project!.slug}>
+                <Article project={project!} views={views[project!.slug] ?? 0} />
               </Card>
             ))}
           </div>
@@ -130,44 +114,22 @@ export default async function ProjectsPage() {
 
         <div className="hidden w-full h-px md:block bg-zinc-800" />
 
-        {/* Remaining projects */}
+        {/* Grilla del resto */}
         <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 0)
-              .map((project) => (
-                <Card key={project.slug}>
-                  <Article
-                    project={project}
-                    views={views[project.slug] ?? 0}
-                  />
-                </Card>
-              ))}
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 1)
-              .map((project) => (
-                <Card key={project.slug}>
-                  <Article
-                    project={project}
-                    views={views[project.slug] ?? 0}
-                  />
-                </Card>
-              ))}
-          </div>
-          <div className="grid grid-cols-1 gap-4">
-            {sorted
-              .filter((_, i) => i % 3 === 2)
-              .map((project) => (
-                <Card key={project.slug}>
-                  <Article
-                    project={project}
-                    views={views[project.slug] ?? 0}
-                  />
-                </Card>
-              ))}
-          </div>
+          {[0, 1, 2].map((col) => (
+            <div className="grid grid-cols-1 gap-4" key={col}>
+              {sorted
+                .filter((_, i) => i % 3 === col)
+                .map((project) => (
+                  <Card key={project.slug}>
+                    <Article
+                      project={project}
+                      views={views[project.slug] ?? 0}
+                    />
+                  </Card>
+                ))}
+            </div>
+          ))}
         </div>
       </div>
     </div>
