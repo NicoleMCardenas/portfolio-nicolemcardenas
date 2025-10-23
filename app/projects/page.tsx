@@ -1,3 +1,4 @@
+// app/projects/page.tsx
 import Link from "next/link";
 import React from "react";
 import { allProjects } from "contentlayer/generated";
@@ -11,7 +12,7 @@ const redis = Redis.fromEnv();
 export const revalidate = 60;
 
 export default async function ProjectsPage() {
-  // 1) Views (igual que antes)
+  // 🔹 Obtenemos las vistas desde Upstash Redis
   const views = (
     await redis.mget<number[]>(
       ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":")),
@@ -21,49 +22,53 @@ export default async function ProjectsPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  // 2) TUS proyectos (ajusta esta lista si cambian tus slugs)
-  const myPrioritySlugs = ["trainup", "portfolio", "madre-aroma"];
+  // 🔹 Prioridad personalizada (ajusta con tus slugs)
+  const myPriority = ["trainup", "portfolio", "madre-aroma"];
 
-  // Filtra solo publicados
+  // 🔹 Filtramos los proyectos publicados
   const published = allProjects.filter((p) => p.published);
 
-  // Ordena por fecha desc
-  const byDateDesc = [...published].sort(
+  // 🔹 Orden descendente por fecha
+  const ordered = [...published].sort(
     (a, b) =>
       new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
-      new Date(a.date ?? Number.POSITIVE_INFINITY).getTime(),
+      new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
   );
 
-  // Toma primero el que coincida con prioridad; si no, el más reciente publicado
+  // 🔹 Featured será TrainUp o el primero en prioridad
   const featured =
-    byDateDesc.find((p) => myPrioritySlugs.includes(p.slug)) ?? byDateDesc[0];
+    ordered.find((p) => myPriority.includes(p.slug)) ?? ordered[0];
 
-  // Resto después del featured
-  const remaining = byDateDesc.filter((p) => p.slug !== featured?.slug);
+  // 🔹 Siguientes dos proyectos destacados
+  const top2 = ordered.find((p) => p.slug !== featured?.slug);
+  const top3 = ordered.find(
+    (p) => p.slug !== featured?.slug && p.slug !== top2?.slug
+  );
 
-  // Toma los siguientes dos como destacados secundarios
-  const top2 = remaining[0];
-  const top3 = remaining[1];
-
-  // El resto va a la grilla inferior
-  const sorted = remaining.slice(2);
+  // 🔹 El resto va al grid inferior
+  const sorted = ordered.filter(
+    (p) => p.slug !== featured?.slug && p.slug !== top2?.slug && p.slug !== top3?.slug
+  );
 
   return (
     <div className="relative pb-16">
       <Navigation />
+
+      {/* Header */}
       <div className="px-6 pt-20 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
         <div className="max-w-2xl mx-auto lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
             Projects
           </h2>
           <p className="mt-4 text-zinc-400">
-            A selection of apps I’ve built — full-stack projects with NestJS, PostgreSQL, and Next.js.
+            A selection of applications I’ve built — full-stack projects with
+            NestJS, PostgreSQL, and Next.js.
           </p>
         </div>
 
         <div className="w-full h-px bg-zinc-800" />
 
-        {/* Featured + Top2/Top3 */}
+        {/* Featured + Top 2/3 */}
         <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
           {featured && (
             <Card>
@@ -83,9 +88,9 @@ export default async function ProjectsPage() {
                     </div>
                     <span className="flex items-center gap-1 text-xs text-zinc-500">
                       <Eye className="w-4 h-4" />{" "}
-                      {Intl.NumberFormat("en-US", { notation: "compact" }).format(
-                        views[featured.slug] ?? 0,
-                      )}
+                      {Intl.NumberFormat("en-US", {
+                        notation: "compact",
+                      }).format(views[featured.slug] ?? 0)}
                     </span>
                   </div>
 
@@ -97,8 +102,9 @@ export default async function ProjectsPage() {
                   </h2>
 
                   <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-                    {featured.description ?? featured.summary}
+                    {featured.summary ?? featured.description}
                   </p>
+
                   <div className="absolute bottom-4 md:bottom-8">
                     <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
                       Read more <span aria-hidden="true">&rarr;</span>
@@ -112,7 +118,10 @@ export default async function ProjectsPage() {
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
             {[top2, top3].filter(Boolean).map((project) => (
               <Card key={(project as any).slug}>
-                <Article project={project as any} views={views[(project as any).slug] ?? 0} />
+                <Article
+                  project={project as any}
+                  views={views[(project as any).slug] ?? 0}
+                />
               </Card>
             ))}
           </div>
@@ -120,14 +129,17 @@ export default async function ProjectsPage() {
 
         <div className="hidden w-full h-px md:block bg-zinc-800" />
 
-        {/* Rest of projects in 3 columns */}
+        {/* Rest of Projects */}
         <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
           <div className="grid grid-cols-1 gap-4">
             {sorted
               .filter((_, i) => i % 3 === 0)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <Article
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                  />
                 </Card>
               ))}
           </div>
@@ -136,7 +148,10 @@ export default async function ProjectsPage() {
               .filter((_, i) => i % 3 === 1)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <Article
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                  />
                 </Card>
               ))}
           </div>
@@ -145,7 +160,10 @@ export default async function ProjectsPage() {
               .filter((_, i) => i % 3 === 2)
               .map((project) => (
                 <Card key={project.slug}>
-                  <Article project={project} views={views[project.slug] ?? 0} />
+                  <Article
+                    project={project}
+                    views={views[project.slug] ?? 0}
+                  />
                 </Card>
               ))}
           </div>
