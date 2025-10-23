@@ -23,8 +23,7 @@ export default function Home() {
       title: "Databases",
       items: [
         { label: "PostgreSQL", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-{ label: "Neon", src: "https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/neon.svg" },
-
+        { label: "Neon", src: "https://cdn.worldvectorlogo.com/logos/neon-11.svg" },
         { label: "Railway DB", src: "https://cdn.simpleicons.org/railway/ffffff" },
       ],
     },
