@@ -33,9 +33,6 @@ export default function Home() {
         { label: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
         { label: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs/ffffff" },
         { label: "TailwindCSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-        { label: "Framer Motion", src: "https://cdn.simpleicons.org/framer/ffffff" },
-        { label: "Lucide", src: "https://cdn.simpleicons.org/lucide/ffffff" },
-        { label: "Recharts", src: "https://cdn.simpleicons.org/recharts/ffffff" },
       ],
     },
     {
@@ -43,7 +40,6 @@ export default function Home() {
       items: [
         { label: "Railway", src: "https://cdn.simpleicons.org/railway/ffffff" },
         { label: "Vercel", src: "https://cdn.simpleicons.org/vercel/ffffff" },
-        { label: "GitHub Actions", src: "https://cdn.simpleicons.org/githubactions/2088FF" },
         { label: "Git", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
         { label: "Docker", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" },
         { label: "SendGrid", src: "https://cdn.simpleicons.org/sendgrid" },
