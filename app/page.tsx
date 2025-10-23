@@ -155,17 +155,25 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Tech stack */}
-        <div className="mx-auto max-w-6xl px-6 pb-16">
-          <h4 className="text-center text-lg text-zinc-400 mb-8">Tech I work with</h4>
+                {/* Tech stack */}
+        <div className="mx-auto max-w-6xl px-6 pb-16 text-center">
+          <h4 className="text-lg text-zinc-400 mb-8">Tech I work with</h4>
 
-          <div className="space-y-10">
+          <div className="space-y-12">
             {techGroups.map((group) => (
               <div key={group.title}>
-                <h5 className="text-zinc-300 text-sm mb-4 tracking-wide uppercase">{group.title}</h5>
-                <div className="flex flex-wrap items-center gap-6 md:gap-8">
+                {/* Título centrado */}
+                <h5 className="text-zinc-300 text-sm mb-6 tracking-wide uppercase text-center">
+                  {group.title}
+                </h5>
+
+                {/* Íconos centrados */}
+                <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
                   {group.items.map((t) => (
-                    <div key={t.label} className="flex flex-col items-center gap-2">
+                    <div
+                      key={t.label}
+                      className="flex flex-col items-center gap-2 transition-transform hover:scale-110"
+                    >
                       <img
                         src={t.src}
                         alt={t.label}
@@ -180,6 +188,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+
     </>
   );
 }
