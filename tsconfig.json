@@ -9,7 +9,6 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "typeRoots": ["./types", "./node_modules/@types"]
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,7 +23,8 @@
     "paths": {
       "@/*": ["./*"],
       "contentlayer/generated": ["./.contentlayer/generated"]  
-    }
+    },
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "types/**/*.d.ts" ],
   "exclude": ["node_modules"]
