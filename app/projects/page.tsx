@@ -1,3 +1,4 @@
+// app/projects/page.tsx
 import Link from "next/link";
 import React from "react";
 import { allProjects } from "contentlayer/generated";
@@ -6,10 +7,11 @@ import { Card } from "../components/card";
 import { Article } from "./article";
 import { Eye } from "lucide-react";
 
-export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
   const views: Record<string, number> = {};
+
 
   const published = allProjects
     .filter((p) => p.published)
@@ -24,7 +26,6 @@ export default async function ProjectsPage() {
   const rest = published.filter((p) => p.slug !== featured?.slug);
   const top2 = rest[0];
   const top3 = rest[1];
-
   const sorted = rest.slice(2);
 
   return (
@@ -62,7 +63,7 @@ export default async function ProjectsPage() {
                     </div>
 
                     <span className="flex items-center gap-1 text-xs text-zinc-500">
-                      <Eye className="w-4 h-4" />{" "}
+                      <Eye className="w-4 h-4" />
                       {Intl.NumberFormat("en-US", { notation: "compact" }).format(
                         views[featured.slug] ?? 0
                       )}
@@ -74,7 +75,9 @@ export default async function ProjectsPage() {
                   </h2>
 
                   <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
-                    {(featured as any).description ?? (featured as any).summary ?? ""}
+                    {(featured as any).description ??
+                      (featured as any).summary ??
+                      ""}
                   </p>
 
                   <div className="absolute bottom-4 md:bottom-8">
@@ -90,8 +93,7 @@ export default async function ProjectsPage() {
           <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0">
             {[top2, top3].filter(Boolean).map((project) => (
               <Card key={project!.slug}>
-
-                <Article project={project!} views={views[project!.slug] ?? 0} />
+                <Article project={project!} views={0} />
               </Card>
             ))}
           </div>
@@ -106,7 +108,7 @@ export default async function ProjectsPage() {
                 .filter((_, i) => i % 3 === col)
                 .map((project) => (
                   <Card key={project.slug}>
-                    <Article project={project} views={views[project.slug] ?? 0} />
+                    <Article project={project} views={0} />
                   </Card>
                 ))}
             </div>
@@ -116,3 +118,4 @@ export default async function ProjectsPage() {
     </div>
   );
 }
+
