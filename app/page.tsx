@@ -1,195 +1,141 @@
-// app/page.tsx
 import Link from "next/link";
 import React from "react";
-import Particles from "./components/particles";
+import { allProjects } from "contentlayer/generated";
+import { Navigation } from "../components/nav";
+import { Card } from "../components/card";
+import { Article } from "./article";
+import { Redis } from "@upstash/redis";
+import { Eye } from "lucide-react";
 
-export default function Home() {
-  // Agrupación de tecnologías
-  const techGroups = [
-    {
-      title: "Backend & Core",
-      items: [
-        { label: "NestJS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nestjs/nestjs-original.svg" },
-        { label: "Node.js", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
-        { label: "Express.js", src: "https://cdn.simpleicons.org/express/ffffff" },
-        { label: "TypeORM", src: "https://cdn.simpleicons.org/typeorm" },
-        { label: "TypeScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
-        { label: "JavaScript", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
-        { label: "Swagger", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" },
-        { label: "JWT", src: "https://cdn.simpleicons.org/jsonwebtokens/ffffff" },
-      ],
-    },
-    {
-      title: "Databases",
-      items: [
-        { label: "PostgreSQL", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
-        { label: "Neon", src: "https://cdn.worldvectorlogo.com/logos/neon-11.svg" },
-        { label: "Railway DB", src: "https://cdn.simpleicons.org/railway/ffffff" },
-      ],
-    },
-    {
-      title: "Frontend & UI",
-      items: [
-        { label: "React", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
-        { label: "HTML5", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
-        { label: "Next.js", src: "https://cdn.simpleicons.org/nextdotjs/ffffff" },
-        { label: "TailwindCSS", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
-      ],
-    },
-    {
-      title: "Infra & DevOps",
-      items: [
-        { label: "Railway", src: "https://cdn.simpleicons.org/railway/ffffff" },
-        { label: "Vercel", src: "https://cdn.simpleicons.org/vercel/ffffff" },
-        { label: "Git", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
-        { label: "Docker", src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-plain.svg" },
-        { label: "SendGrid", src: "https://cdn.simpleicons.org/sendgrid" },
-        { label: "Stripe", src: "https://cdn.simpleicons.org/stripe" },
-        { label: "MercadoPago", src: "https://cdn.simpleicons.org/mercadopago" },
-        { label: "Google Maps API", src: "https://cdn.simpleicons.org/googlemaps" },
-      ],
-    },
-  ];
+export const revalidate = 60;
+
+function hasUpstashEnv() {
+  return (
+    !!process.env.UPSTASH_REDIS_REST_URL &&
+    !!process.env.UPSTASH_REDIS_REST_TOKEN
+  );
+}
+
+export default async function ProjectsPage() {
+
+  let views: Record<string, number> = {};
+
+  if (hasUpstashEnv()) {
+    try {
+      const redis = Redis.fromEnv();
+      const raw = await redis.mget<number[]>(
+        ...allProjects.map((p) => ["pageviews", "projects", p.slug].join(":"))
+      );
+
+      views = raw.reduce((acc, v, i) => {
+        acc[allProjects[i].slug] = v ?? 0;
+        return acc;
+      }, {} as Record<string, number>);
+    } catch {
+      views = {};
+    }
+  }
+
+  const published = allProjects
+    .filter((p) => p.published)
+    .sort(
+      (a, b) =>
+        new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
+        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
+    );
+
+  const featured = published.find((p) => p.slug === "trainup") ?? published[0];
+
+  const rest = published.filter((p) => p.slug !== featured.slug);
+  const top2 = rest[0];
+  const top3 = rest[1];
+
+  const sorted = rest.slice(2);
 
   return (
-    <>
-      {/* HERO principal */}
-      <div className="relative flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-800/20 to-black px-6">
-
-        {/* NAV */}
-        <nav className="absolute top-6 left-6 flex items-center gap-5 text-zinc-400 text-sm">
-          <Link
-            href="https://www.linkedin.com/in/nicolemorcar"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:text-white transition"
-          >
-            LinkedIn
-          </Link>
-          <Link
-            href="https://github.com/NicoleMCardenas"
-            target="_blank"
-            rel="noreferrer"
-            className="hover:text-white transition"
-          >
-            GitHub
-          </Link>
-          <Link href="/projects" className="hover:text-white transition">
+    <div className="relative pb-16">
+      <Navigation />
+      <div className="px-6 pt-20 mx-auto space-y-8 max-w-7xl lg:px-8 md:space-y-16 md:pt-24 lg:pt-32">
+        <div className="max-w-2xl mx-auto lg:mx-0">
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl">
             Projects
-          </Link>
-        </nav>
-
-        <Particles className="absolute inset-0 -z-10 animate-fade-in" quantity={100} />
-
-        {/* HERO contenido */}
-        <div className="relative z-10 grid items-center gap-10 text-center md:text-left md:grid-cols-2 max-w-6xl w-full">
-          <div className="order-2 md:order-1">
-            <h1 className="py-3.5 px-0.5 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-transparent duration-1000 bg-white cursor-default text-edge-outline animate-title font-display leading-tight bg-clip-text">
-              Nicole Morelos Cárdenas
-            </h1>
-
-            <h2 className="mt-2 text-2xl sm:text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-zinc-300 to-gray-400">
-              Full-Stack Developer
-            </h2>
-
-            <p className="mt-2 text-base sm:text-lg text-zinc-400">
-              Backend Specialist · API Architecture · Marketing & Innovation Strategy
-            </p>
-
-            <div className="mt-5 flex items-center gap-3">
-              <Link
-                href="/contact"
-                className="inline-block px-6 py-3 bg-white text-black font-medium rounded-md shadow-sm hover:bg-zinc-200 transition"
-              >
-                Let’s Build Something Together 🚀
-              </Link>
-              <a
-                href="#about"
-                className="inline-block px-4 py-3 border border-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-900/40 transition"
-              >
-                Learn more ↓
-              </a>
-            </div>
-          </div>
-
-          <div className="order-1 md:order-2 flex justify-center">
-            <img
-              src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
-              alt="Web development — dark workspace"
-              className="w-[300px] sm:w-[380px] md:w-[460px] rounded-xl shadow-lg border border-white/10 object-cover"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* ABOUT */}
-      <section id="about" className="relative z-10 w-full bg-black/60 backdrop-blur-sm border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-          <div className="flex justify-center md:justify-start">
-            <img
-              src="/profile.jpg"
-              alt="Nicole Morelos Cárdenas"
-              className="w-[240px] sm:w-[280px] md:w-[320px] rounded-2xl shadow-xl object-cover border border-white/10"
-            />
-          </div>
-
-          <div>
-            <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">About Me</h3>
-            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
-              I’m a developer who blends technical precision with strategic thinking and creative execution.<br />
-              My focus is on building <strong>scalable, secure, and well-designed APIs</strong> using{" "}
-              <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and maintainable systems.<br />
-              Beyond code, I bring a background in <strong>marketing and innovation strategy</strong>, helping transform technical
-              products into meaningful digital experiences.<br />
-              For me, technology isn’t just about functionality — it’s about{" "}
-              <strong>creating impact, connection, and growth</strong> through every line of code.
-            </p>
-
-            <div className="mt-6">
-              <Link
-                href="/contact"
-                className="inline-block px-5 py-2.5 border border-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-900/40 transition"
-              >
-                Contact me
-              </Link>
-            </div>
-          </div>
+          </h2>
+          <p className="mt-4 text-zinc-400">
+            Some of the projects are from work and some are on my own time.
+          </p>
         </div>
 
-                {/* Tech stack */}
-        <div className="mx-auto max-w-6xl px-6 pb-16 text-center">
-          <h4 className="text-lg text-zinc-400 mb-8">Tech I work with</h4>
+        <div className="w-full h-px bg-zinc-800" />
 
-          <div className="space-y-12">
-            {techGroups.map((group) => (
-              <div key={group.title}>
-                {/* Título centrado */}
-                <h5 className="text-zinc-300 text-sm mb-6 tracking-wide uppercase text-center">
-                  {group.title}
-                </h5>
-
-                {/* Íconos centrados */}
-                <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10">
-                  {group.items.map((t) => (
-                    <div
-                      key={t.label}
-                      className="flex flex-col items-center gap-2 transition-transform hover:scale-110"
-                    >
-                      <img
-                        src={t.src}
-                        alt={t.label}
-                        className="h-10 w-10 md:h-12 md:w-12 opacity-90 hover:opacity-100 transition duration-300 filter grayscale hover:grayscale-0 drop-shadow"
-                      />
-                      <span className="text-xs text-zinc-400">{t.label}</span>
+        <div className="grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2 ">
+          {featured && (
+            <Card>
+              <Link href={`/projects/${featured.slug}`}>
+                <article className="relative w-full h-full p-4 md:p-8">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="text-xs text-zinc-100">
+                      {featured.date ? (
+                        <time dateTime={new Date(featured.date).toISOString()}>
+                          {Intl.DateTimeFormat(undefined, {
+                            dateStyle: "medium",
+                          }).format(new Date(featured.date))}
+                        </time>
+                      ) : (
+                        <span>SOON</span>
+                      )}
                     </div>
-                  ))}
-                </div>
-              </div>
+                    <span className="flex items-center gap-1 text-xs text-zinc-500">
+                      <Eye className="w-4 h-4" />{" "}
+                      {Intl.NumberFormat("en-US", { notation: "compact" }).format(
+                        views[featured.slug] ?? 0
+                      )}
+                    </span>
+                  </div>
+
+                  <h2
+                    id="featured-post"
+                    className="mt-4 text-3xl font-bold text-zinc-100 group-hover:text-white sm:text-4xl font-display"
+                  >
+                    {featured.title}
+                  </h2>
+                  <p className="mt-4 leading-8 duration-150 text-zinc-400 group-hover:text-zinc-300">
+                    {(featured as any).description ?? (featured as any).summary ?? ""}
+                  </p>
+                  <div className="absolute bottom-4 md:bottom-8">
+                    <p className="hidden text-zinc-200 hover:text-zinc-50 lg:block">
+                      Read more <span aria-hidden="true">&rarr;</span>
+                    </p>
+                  </div>
+                </article>
+              </Link>
+            </Card>
+          )}
+
+          <div className="flex flex-col w-full gap-8 mx-auto border-t border-gray-900/10 lg:mx-0 lg:border-t-0 ">
+            {[top2, top3].filter(Boolean).map((project) => (
+              <Card key={project!.slug}>
+                <Article project={project!} views={views[project!.slug] ?? 0} />
+              </Card>
             ))}
           </div>
         </div>
-      </section>
 
-    </>
+        <div className="hidden w-full h-px md:block bg-zinc-800" />
+
+        <div className="grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3">
+          {[0, 1, 2].map((col) => (
+            <div className="grid grid-cols-1 gap-4" key={col}>
+              {sorted
+                .filter((_, i) => i % 3 === col)
+                .map((project) => (
+                  <Card key={project.slug}>
+                    <Article project={project} views={views[project.slug] ?? 0} />
+                  </Card>
+                ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 }
