@@ -152,10 +152,8 @@ export default function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section
-        id="about"
-        className="relative w-full bg-black/60 backdrop-blur-sm border-t border-white/5"
-      >
+<section id="about" className="w-full bg-black border-t border-white/5">
+
         <div className="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
           <div className="flex justify-center md:justify-start">
             <img
