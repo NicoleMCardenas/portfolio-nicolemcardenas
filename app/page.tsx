@@ -1,3 +1,4 @@
+// app/page.tsx
 import Link from "next/link";
 import Image from "next/image";
 import Particles from "./components/particles";
@@ -72,4 +73,73 @@ export default function HomePage() {
           {/* Right image */}
           <div className="relative">
             <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
-              <div className="relati
+              <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
+                <Image
+                  src="/profile.jpg"
+                  alt="Nicole M. Cárdenas"
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* TECH STACK */}
+        <section className="mt-24 space-y-16 text-center">
+          {[
+            {
+              title: "BACKEND & CORE",
+              items: ["NestJS", "Node.js", "Express.js", "TypeORM", "TypeScript", "JWT", "Swagger"],
+            },
+            {
+              title: "DATABASES",
+              items: ["PostgreSQL", "Neon", "Railway DB"],
+            },
+            {
+              title: "FRONTEND & UI",
+              items: ["React", "Next.js", "HTML5", "Tailwind CSS"],
+            },
+            {
+              title: "INFRA & DEVOPS",
+              items: ["Railway", "Vercel", "Docker", "Git", "Stripe", "MercadoPago", "SendGrid"],
+            },
+          ].map((group) => (
+            <div key={group.title}>
+              <h3 className="text-sm tracking-widest text-zinc-400">
+                {group.title}
+              </h3>
+              <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-zinc-300">
+                {group.items.map((item) => (
+                  <span key={item} className="hover:text-white transition">
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      </main>
+
+      {/* Name animation */}
+      <style jsx global>{`
+        .animate-name {
+          opacity: 0;
+          transform: translateY(12px);
+          animation: fadeUp 700ms ease forwards;
+        }
+        .animate-name.delay {
+          animation-delay: 120ms;
+        }
+        @keyframes fadeUp {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
