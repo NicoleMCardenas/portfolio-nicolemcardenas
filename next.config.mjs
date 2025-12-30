@@ -1,11 +1,19 @@
 import { withContentlayer } from "next-contentlayer";
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-	pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
-	experimental: {
-		mdxRs: true,
-	},
+  pageExtensions: ["js", "jsx", "ts", "tsx", "md", "mdx"],
+  experimental: {
+    mdxRs: true,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+    ],
+  },
 };
 
 export default withContentlayer(nextConfig);
