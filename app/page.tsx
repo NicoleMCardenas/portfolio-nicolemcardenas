@@ -85,7 +85,7 @@ export default function HomePage({ searchParams }: Props) {
     heroRole: lang === "es" ? "Desarrolladora Full-Stack" : "Full-Stack Developer",
     heroSub:
       lang === "es"
-        ? "Backend Specialist · Arquitectura de APIs · Estrategia de Marketing e Innovación"
+        ? "Especialista Backend · Arquitectura de APIs · Estrategia de Marketing e Innovación"
         : "Backend Specialist · API Architecture · Marketing & Innovation Strategy",
     ctaPrimary: lang === "es" ? "Contáctame" : "Contact me",
     ctaStack: lang === "es" ? "Tecnologías" : "Stack",
