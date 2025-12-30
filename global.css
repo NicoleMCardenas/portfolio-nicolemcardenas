@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   .text-edge-outline {
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
@@ -27,14 +26,10 @@
   }
 }
 
-
-html {
-  scroll-behavior: smooth;
+.btn-ghost {
+  @apply rounded-md border border-zinc-700 px-6 py-3 text-sm text-zinc-200 hover:bg-zinc-900/40 transition;
 }
 
-
-body {
-  background-color: #000;
-  color: #fff;
+.btn-primary {
+  @apply rounded-md bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-zinc-200 transition;
 }
-
