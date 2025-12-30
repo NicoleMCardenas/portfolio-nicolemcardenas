@@ -38,9 +38,9 @@ function t(lang: "en" | "es") {
     // hero
     role: isEs ? "Desarrolladora Full-Stack" : "Full-Stack Developer",
     subtitle: isEs
-      ? "Backend Specialist · Arquitectura de APIs · Marketing & Estrategia de Innovación"
-      : "Backend Specialist · API Architecture · Marketing & Innovation Strategy",
-    cta: isEs ? "Construyamos algo juntas 🚀" : "Let’s Build Something Together 🚀",
+      ? "Especialista Backend · Arquitectura de APIs · Marketing & Diseño Estratégico e Innovación"
+      : "Backend Specialist · API Architecture · Marketing & Strategic Design & Innovation",
+    cta: isEs ? "Construyamos algo juntos 🚀" : "Let’s Build Something Together 🚀",
     learnMore: isEs ? "Descubrir más ↓" : "Learn more ↓",
 
     // sections
@@ -48,26 +48,35 @@ function t(lang: "en" | "es") {
     aboutBody: isEs ? (
       <>
         Soy una desarrolladora que combina precisión técnica con pensamiento estratégico y ejecución creativa.
-        <br /><br />
+        <br />
+        <br />
         Me enfoco en construir <strong>APIs escalables, seguras y bien diseñadas</strong> con{" "}
         <strong>NestJS, TypeScript y PostgreSQL</strong>, cuidando la arquitectura limpia y la mantenibilidad.
-        <br /><br />
-        Además, tengo experiencia en <strong>marketing y estrategia de innovación</strong>, conectando lo técnico con productos
-        digitales que generan valor real.
-        <br /><br />
+        <br />
+        <br />
+        Además, tengo experiencia en{" "}
+        <strong>marketing (licenciatura) y diseño estratégico e innovación (maestría)</strong>, conectando lo
+        técnico con productos digitales que generan valor real y holístico.
+        <br />
+        <br />
         Para mí, la tecnología no es solo funcionalidad: es{" "}
         <strong>impacto, conexión y crecimiento</strong> en cada línea de código.
       </>
     ) : (
       <>
         I’m a developer who blends technical precision with strategic thinking and creative execution.
-        <br /><br />
+        <br />
+        <br />
         My focus is on building <strong>scalable, secure, and well-designed APIs</strong> using{" "}
-        <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and maintainable systems.
-        <br /><br />
-        Beyond code, I bring a background in <strong>marketing and innovation strategy</strong>, helping transform technical products
-        into meaningful digital experiences.
-        <br /><br />
+        <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and
+        maintainable systems.
+        <br />
+        <br />
+        Beyond code, I bring a background in <strong>marketing</strong> (bachelor's degree) and{" "}
+        <strong>strategic design & innovation</strong> (master's degree), helping transform technical products
+        into holistic and meaningful digital experiences.
+        <br />
+        <br />
         For me, technology isn’t just about functionality — it’s about{" "}
         <strong>creating impact, connection, and growth</strong> through every line of code.
       </>
@@ -109,6 +118,7 @@ export default function HomePage({ searchParams }: HomeProps) {
           <Link
             href="https://www.linkedin.com/in/nicolemcardenas/"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-white transition"
           >
             {copy.linkedin}
@@ -116,6 +126,7 @@ export default function HomePage({ searchParams }: HomeProps) {
           <Link
             href="https://github.com/NicoleMCardenas"
             target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-white transition"
           >
             {copy.github}
@@ -127,15 +138,12 @@ export default function HomePage({ searchParams }: HomeProps) {
 
         {/* Language toggle (top-right) */}
         <div className="absolute top-5 right-6 z-20">
-          <Link
-            href={toggleHref}
-            className="btn-ghost inline-flex items-center gap-2 px-4 py-2"
-          >
+          <Link href={toggleHref} className="btn-ghost inline-flex items-center gap-2 px-4 py-2">
             {copy.toggleLabel}
           </Link>
         </div>
 
-        {/* PARTICLES (white moving dots) */}
+        {/* PARTICLES */}
         <div className="absolute inset-0 -z-10">
           <Particles className="absolute inset-0" quantity={140} />
           <div className="absolute inset-0 bg-black/50" />
@@ -154,29 +162,29 @@ export default function HomePage({ searchParams }: HomeProps) {
 
             <p className="mt-2 text-sm text-zinc-400 max-w-xl">{copy.subtitle}</p>
 
-            {/* Buttons: EXACTLY 2 like your image 1 */}
+            {/* Buttons */}
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-primary">
                 {copy.cta}
               </Link>
 
-              {/* Learn more => About */}
               <a href="#about" className="btn-ghost">
                 {copy.learnMore}
               </a>
             </div>
           </div>
 
-          {/* RIGHT IMAGE (Laptop) */}
-          <div className="flex justify-center">
-            <div className="w-[320px] sm:w-[420px] md:w-[520px] overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-white/5">
-              <div className="relative aspect-[16/10]">
+          {/* RIGHT */}
+          <div className="relative flex justify-center">
+            <div className="w-[320px] sm:w-[420px] md:w-[520px] rounded-2xl border border-white/10 bg-white/5 p-3 shadow-xl">
+              <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
                 <Image
-                  src="/og.png"
-                  alt="Code laptop"
+                  src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1400&q=80"
+                  alt="Web development workspace"
                   fill
                   priority
                   className="object-cover"
+                  sizes="(max-width: 640px) 320px, (max-width: 768px) 420px, 520px"
                 />
               </div>
             </div>
@@ -202,15 +210,12 @@ export default function HomePage({ searchParams }: HomeProps) {
           </div>
 
           <div>
-            <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
-              {copy.aboutTitle}
-            </h3>
+            <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">{copy.aboutTitle}</h3>
 
             <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
               {copy.aboutBody}
             </p>
 
-            {/* Buttons same style as Learn more */}
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-ghost">
                 {copy.contactMe}
@@ -224,14 +229,10 @@ export default function HomePage({ searchParams }: HomeProps) {
         </div>
       </section>
 
-      {/* STACK (final) */}
+      {/* STACK */}
       <section id="stack" className="mx-auto max-w-6xl px-6 py-20">
-        <h3 className="mb-3 text-center text-sm tracking-widest text-zinc-400">
-          {copy.stackTitle}
-        </h3>
-        <p className="mb-12 text-center text-zinc-400 text-sm">
-          {copy.stackSubtitle}
-        </p>
+        <h3 className="mb-4 text-center text-sm tracking-widest text-zinc-400">{copy.stackTitle}</h3>
+        <p className="mb-10 text-center text-zinc-500 text-sm">{copy.stackSubtitle}</p>
 
         <div className="grid grid-cols-3 gap-y-10 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
           <TechIcon icon={<SiNestjs />} label="NestJS" />
@@ -240,19 +241,24 @@ export default function HomePage({ searchParams }: HomeProps) {
           <TechIcon icon={<SiTypescript />} label="TypeScript" />
           <TechIcon icon={<SiJavascript />} label="JavaScript" />
           <TechIcon icon={<SiPostgresql />} label="PostgreSQL" />
-          <TechIcon icon={<span className="text-xl font-semibold">NEON</span>} label="Neon DB" />
-          <TechIcon icon={<SiRailway />} label="Railway" />
+
           <TechIcon icon={<SiReact />} label="React" />
           <TechIcon icon={<SiNextdotjs />} label="Next.js" />
-          <TechIcon icon={<SiTailwindcss />} label="Tailwind" />
+          <TechIcon icon={<SiTailwindcss />} label="TailwindCSS" />
+
           <TechIcon icon={<SiDocker />} label="Docker" />
           <TechIcon icon={<SiGit />} label="Git" />
+
           <TechIcon icon={<SiSwagger />} label="Swagger" />
           <TechIcon icon={<SiJsonwebtokens />} label="JWT" />
           <TechIcon icon={<SiSendgrid />} label="SendGrid" />
           <TechIcon icon={<SiStripe />} label="Stripe" />
+
           <TechIcon icon={<span className="text-xl font-semibold">MP</span>} label="MercadoPago" />
           <TechIcon icon={<SiGooglemaps />} label="Google Maps API" />
+
+          <TechIcon icon={<span className="text-xl font-semibold">NEON</span>} label="Neon DB" />
+          <TechIcon icon={<SiRailway />} label="Railway" />
           <TechIcon icon={<SiVercel />} label="Vercel" />
           <TechIcon icon={<SiRender />} label="Render" />
         </div>
