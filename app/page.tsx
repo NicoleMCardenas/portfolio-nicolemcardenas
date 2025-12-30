@@ -23,7 +23,6 @@ import {
   SiSendgrid,
   SiGooglemaps,
   SiRender,
-  SiNeon,
 } from "react-icons/si";
 
 // Un item de icono reutilizable
@@ -166,7 +165,7 @@ export default function HomePage() {
                 <SiPostgresql />
               </TechIcon>
               <TechIcon label="Neon">
-                <SiNeon />
+                <span className="text-lg font-semibold">Neon</span>
               </TechIcon>
               <TechIcon label="Railway DB">
                 <SiRailway />
