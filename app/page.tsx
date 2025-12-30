@@ -1,7 +1,7 @@
-// app/page.tsx
 import Link from "next/link";
 import Image from "next/image";
 import Particles from "./components/particles";
+
 import {
   SiNestjs,
   SiNodedotjs,
@@ -9,33 +9,31 @@ import {
   SiTypescript,
   SiJavascript,
   SiPostgresql,
-  SiSwagger,
-  SiJsonwebtokens,
   SiReact,
   SiNextdotjs,
-  SiHtml5,
   SiTailwindcss,
-  SiRailway,
-  SiVercel,
   SiDocker,
   SiGit,
   SiStripe,
   SiSendgrid,
+  SiSwagger,
+  SiJsonwebtokens,
+  SiRailway,
+  SiVercel,
   SiGooglemaps,
   SiRender,
 } from "react-icons/si";
 
-// Un item de icono reutilizable
 function TechIcon({
+  icon,
   label,
-  children,
 }: {
+  icon: React.ReactNode;
   label: string;
-  children: React.ReactNode;
 }) {
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="text-4xl text-zinc-200">{children}</div>
+    <div className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition">
+      <div className="text-3xl">{icon}</div>
       <span className="text-xs text-zinc-400">{label}</span>
     </div>
   );
@@ -43,16 +41,11 @@ function TechIcon({
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Background particles */}
-      <div className="absolute inset-0 -z-10">
-        <Particles className="absolute inset-0" quantity={120} />
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-black/90 to-black" />
-      </div>
-
-      {/* Top links */}
-      <header className="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-        <nav className="flex items-center gap-6 text-sm text-zinc-300">
+    <>
+      {/* HERO */}
+      <div className="relative min-h-screen w-full overflow-hidden bg-gradient-to-tl from-black via-zinc-800/20 to-black px-6">
+        {/* NAV */}
+        <nav className="absolute top-6 left-6 z-10 flex items-center gap-5 text-sm text-zinc-400">
           <Link
             href="https://www.linkedin.com/in/nicolemcardenas/"
             target="_blank"
@@ -71,163 +64,136 @@ export default function HomePage() {
             Projects
           </Link>
         </nav>
-      </header>
 
-      <main className="mx-auto max-w-7xl px-6 pt-20 pb-28 lg:px-8">
-        {/* HERO */}
-        <section className="grid items-center gap-14 lg:grid-cols-2">
-          {/* Left */}
-          <div className="max-w-2xl">
-            <h1 className="font-display text-5xl sm:text-6xl font-bold leading-tight">
+        {/* PARTICLES */}
+        <Particles className="absolute inset-0 -z-10" quantity={120} />
+
+        {/* HERO CONTENT */}
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 pt-32 pb-20 md:grid-cols-2">
+          {/* LEFT */}
+          <div>
+            <h1 className="font-display text-5xl sm:text-6xl md:text-7xl leading-tight text-transparent bg-clip-text bg-white">
               <span className="block animate-name">Nicole Morelos</span>
               <span className="block animate-name animate-name-delay">
                 Cárdenas
               </span>
             </h1>
 
-            <p className="mt-6 text-xl font-semibold">Full-Stack Developer</p>
+            <h2 className="mt-4 text-2xl font-semibold text-white">
+              Full-Stack Developer
+            </h2>
 
-            <p className="mt-2 max-w-xl text-sm text-zinc-400">
-              Backend Specialist · API Architecture · Marketing & Innovation
-              Strategy
+            <p className="mt-2 text-sm text-zinc-400 max-w-xl">
+              Backend Specialist · API Architecture · Marketing & Innovation Strategy
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-4">
               <Link
                 href="/contact"
-                className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-zinc-100 transition"
+                className="rounded-md bg-white px-6 py-3 text-sm font-semibold text-black hover:bg-zinc-200 transition"
               >
                 Let’s Build Something Together 🚀
               </Link>
 
-              <Link
-                href="/projects"
-                className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
+              <a
+                href="#about"
+                className="rounded-md border border-zinc-700 px-6 py-3 text-sm text-zinc-200 hover:bg-zinc-900/40 transition"
               >
-                Discover more ↓
+                Learn more ↓
+              </a>
+            </div>
+          </div>
+
+          {/* RIGHT IMAGE (LAPTOP) */}
+          <div className="flex justify-center">
+            <div className="w-[300px] sm:w-[380px] md:w-[460px] overflow-hidden rounded-xl border border-white/10 shadow-lg">
+              <Image
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1200&q=80"
+                alt="Web development workspace"
+                width={1200}
+                height={800}
+                className="h-auto w-full object-cover"
+                priority
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* TECH STACK */}
+      <section className="mx-auto max-w-6xl px-6 py-20">
+        <h3 className="mb-10 text-center text-sm tracking-widest text-zinc-400">
+          TECHNOLOGIES I WORK WITH
+        </h3>
+
+        <div className="grid grid-cols-3 gap-y-10 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
+          <TechIcon icon={<SiNestjs />} label="NestJS" />
+          <TechIcon icon={<SiNodedotjs />} label="Node.js" />
+          <TechIcon icon={<SiExpress />} label="Express" />
+          <TechIcon icon={<SiTypescript />} label="TypeScript" />
+          <TechIcon icon={<SiJavascript />} label="JavaScript" />
+          <TechIcon icon={<SiPostgresql />} label="PostgreSQL" />
+          <TechIcon icon={<span className="text-xl">NEON</span>} label="Neon DB" />
+          <TechIcon icon={<SiRailway />} label="Railway" />
+          <TechIcon icon={<SiReact />} label="React" />
+          <TechIcon icon={<SiNextdotjs />} label="Next.js" />
+          <TechIcon icon={<SiTailwindcss />} label="Tailwind" />
+          <TechIcon icon={<SiDocker />} label="Docker" />
+          <TechIcon icon={<SiGit />} label="Git" />
+          <TechIcon icon={<SiSwagger />} label="Swagger" />
+          <TechIcon icon={<SiJsonwebtokens />} label="JWT" />
+          <TechIcon icon={<SiSendgrid />} label="SendGrid" />
+          <TechIcon icon={<SiStripe />} label="Stripe" />
+          <TechIcon icon={<span className="text-xl">MP</span>} label="MercadoPago" />
+          <TechIcon icon={<SiGooglemaps />} label="Google Maps API" />
+          <TechIcon icon={<SiVercel />} label="Vercel" />
+          <TechIcon icon={<SiRender />} label="Render" />
+        </div>
+      </section>
+
+      {/* ABOUT */}
+      <section
+        id="about"
+        className="relative w-full bg-black/60 backdrop-blur-sm border-t border-white/5"
+      >
+        <div className="mx-auto max-w-6xl px-6 py-16 grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div className="flex justify-center md:justify-start">
+            <img
+              src="/profile.jpg"
+              alt="Nicole Morelos Cárdenas"
+              className="w-[240px] sm:w-[280px] md:w-[320px] rounded-2xl shadow-xl object-cover border border-white/10"
+            />
+          </div>
+
+          <div>
+            <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
+              About Me
+            </h3>
+
+            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
+              I’m a developer who blends technical precision with strategic thinking and creative execution.
+              <br /><br />
+              My focus is on building <strong>scalable, secure, and well-designed APIs</strong> using{" "}
+              <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and maintainable systems.
+              <br /><br />
+              Beyond code, I bring a background in <strong>marketing and innovation strategy</strong>, helping transform technical
+              products into meaningful digital experiences.
+              <br /><br />
+              For me, technology isn’t just about functionality — it’s about{" "}
+              <strong>creating impact, connection, and growth</strong> through every line of code.
+            </p>
+
+            <div className="mt-6">
+              <Link
+                href="/contact"
+                className="inline-block px-5 py-2.5 border border-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-900/40 transition"
+              >
+                Contact me
               </Link>
             </div>
           </div>
-
-          {/* Right image */}
-          <div className="relative">
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
-              <div className="relative aspect-[16/10] rounded-xl overflow-hidden">
-                <Image
-                  src="/profile.jpg"
-                  alt="Nicole M. Cárdenas"
-                  fill
-                  priority
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* TECH STACK (con iconos) */}
-        <section className="mt-24 space-y-16 text-center">
-          {/* BACKEND */}
-          <div>
-            <h3 className="text-sm tracking-widest text-zinc-400">
-              BACKEND & CORE
-            </h3>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
-              <TechIcon label="NestJS">
-                <SiNestjs />
-              </TechIcon>
-              <TechIcon label="Node.js">
-                <SiNodedotjs />
-              </TechIcon>
-              <TechIcon label="Express.js">
-                <SiExpress />
-              </TechIcon>
-              <TechIcon label="TypeScript">
-                <SiTypescript />
-              </TechIcon>
-              <TechIcon label="JavaScript">
-                <SiJavascript />
-              </TechIcon>
-              <TechIcon label="Swagger">
-                <SiSwagger />
-              </TechIcon>
-              <TechIcon label="JWT">
-                <SiJsonwebtokens />
-              </TechIcon>
-            </div>
-          </div>
-
-          {/* DATABASES */}
-          <div>
-            <h3 className="text-sm tracking-widest text-zinc-400">DATABASES</h3>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
-              <TechIcon label="PostgreSQL">
-                <SiPostgresql />
-              </TechIcon>
-              <TechIcon label="Neon">
-                <span className="text-lg font-semibold">Neon</span>
-              </TechIcon>
-              <TechIcon label="Railway DB">
-                <SiRailway />
-              </TechIcon>
-            </div>
-          </div>
-
-          {/* FRONTEND */}
-          <div>
-            <h3 className="text-sm tracking-widest text-zinc-400">
-              FRONTEND & UI
-            </h3>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
-              <TechIcon label="React">
-                <SiReact />
-              </TechIcon>
-              <TechIcon label="Next.js">
-                <SiNextdotjs />
-              </TechIcon>
-              <TechIcon label="HTML5">
-                <SiHtml5 />
-              </TechIcon>
-              <TechIcon label="Tailwind CSS">
-                <SiTailwindcss />
-              </TechIcon>
-            </div>
-          </div>
-
-          {/* INFRA */}
-          <div>
-            <h3 className="text-sm tracking-widest text-zinc-400">
-              INFRA & DEVOPS
-            </h3>
-            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
-              <TechIcon label="Railway">
-                <SiRailway />
-              </TechIcon>
-              <TechIcon label="Vercel">
-                <SiVercel />
-              </TechIcon>
-              <TechIcon label="Render">
-                <SiRender />
-              </TechIcon>
-              <TechIcon label="Docker">
-                <SiDocker />
-              </TechIcon>
-              <TechIcon label="Git">
-                <SiGit />
-              </TechIcon>
-              <TechIcon label="SendGrid">
-                <SiSendgrid />
-              </TechIcon>
-              <TechIcon label="Stripe">
-                <SiStripe />
-              </TechIcon>
-              <TechIcon label="Google Maps API">
-                <SiGooglemaps />
-              </TechIcon>
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+    </>
   );
 }
