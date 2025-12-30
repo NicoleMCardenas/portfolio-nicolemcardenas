@@ -8,6 +8,7 @@ import { Article } from "./article";
 import { Redis } from "@upstash/redis";
 import { Eye } from "lucide-react";
 
+export const runtime = "nodejs";
 export const revalidate = 60;
 
 function hasUpstashEnv() {
