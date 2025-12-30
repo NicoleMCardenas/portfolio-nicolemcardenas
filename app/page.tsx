@@ -2,6 +2,45 @@
 import Link from "next/link";
 import Image from "next/image";
 import Particles from "./components/particles";
+import {
+  SiNestjs,
+  SiNodedotjs,
+  SiExpress,
+  SiTypescript,
+  SiJavascript,
+  SiPostgresql,
+  SiSwagger,
+  SiJsonwebtokens,
+  SiReact,
+  SiNextdotjs,
+  SiHtml5,
+  SiTailwindcss,
+  SiRailway,
+  SiVercel,
+  SiDocker,
+  SiGit,
+  SiStripe,
+  SiSendgrid,
+  SiGooglemaps,
+  SiRender,
+  SiNeon,
+} from "react-icons/si";
+
+// Un item de icono reutilizable
+function TechIcon({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div className="text-4xl text-zinc-200">{children}</div>
+      <span className="text-xs text-zinc-400">{label}</span>
+    </div>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -20,7 +59,7 @@ export default function HomePage() {
             target="_blank"
             className="hover:text-white transition"
           >
-            Linkedin
+            LinkedIn
           </Link>
           <Link
             href="https://github.com/NicoleMCardenas"
@@ -66,7 +105,7 @@ export default function HomePage() {
                 href="/projects"
                 className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                Learn more ↓
+                Discover more ↓
               </Link>
             </div>
           </div>
@@ -87,58 +126,109 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* TECH STACK */}
+        {/* TECH STACK (con iconos) */}
         <section className="mt-24 space-y-16 text-center">
-          {[
-            {
-              title: "BACKEND & CORE",
-              items: [
-                "NestJS",
-                "Node.js",
-                "Express.js",
-                "TypeORM",
-                "TypeScript",
-                "JWT",
-                "Swagger",
-              ],
-            },
-            {
-              title: "DATABASES",
-              items: ["PostgreSQL", "Neon", "Railway DB"],
-            },
-            {
-              title: "FRONTEND & UI",
-              items: ["React", "Next.js", "HTML5", "Tailwind CSS"],
-            },
-            {
-              title: "INFRA & DEVOPS",
-              items: [
-                "Railway",
-                "Vercel",
-                "Docker",
-                "Git",
-                "Stripe",
-                "MercadoPago",
-                "SendGrid",
-              ],
-            },
-          ].map((group) => (
-            <div key={group.title}>
-              <h3 className="text-sm tracking-widest text-zinc-400">
-                {group.title}
-              </h3>
-              <div className="mt-6 flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-zinc-300">
-                {group.items.map((item) => (
-                  <span key={item} className="hover:text-white transition">
-                    {item}
-                  </span>
-                ))}
-              </div>
+          {/* BACKEND */}
+          <div>
+            <h3 className="text-sm tracking-widest text-zinc-400">
+              BACKEND & CORE
+            </h3>
+            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
+              <TechIcon label="NestJS">
+                <SiNestjs />
+              </TechIcon>
+              <TechIcon label="Node.js">
+                <SiNodedotjs />
+              </TechIcon>
+              <TechIcon label="Express.js">
+                <SiExpress />
+              </TechIcon>
+              <TechIcon label="TypeScript">
+                <SiTypescript />
+              </TechIcon>
+              <TechIcon label="JavaScript">
+                <SiJavascript />
+              </TechIcon>
+              <TechIcon label="Swagger">
+                <SiSwagger />
+              </TechIcon>
+              <TechIcon label="JWT">
+                <SiJsonwebtokens />
+              </TechIcon>
             </div>
-          ))}
+          </div>
+
+          {/* DATABASES */}
+          <div>
+            <h3 className="text-sm tracking-widest text-zinc-400">DATABASES</h3>
+            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
+              <TechIcon label="PostgreSQL">
+                <SiPostgresql />
+              </TechIcon>
+              <TechIcon label="Neon">
+                <SiNeon />
+              </TechIcon>
+              <TechIcon label="Railway DB">
+                <SiRailway />
+              </TechIcon>
+            </div>
+          </div>
+
+          {/* FRONTEND */}
+          <div>
+            <h3 className="text-sm tracking-widest text-zinc-400">
+              FRONTEND & UI
+            </h3>
+            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
+              <TechIcon label="React">
+                <SiReact />
+              </TechIcon>
+              <TechIcon label="Next.js">
+                <SiNextdotjs />
+              </TechIcon>
+              <TechIcon label="HTML5">
+                <SiHtml5 />
+              </TechIcon>
+              <TechIcon label="Tailwind CSS">
+                <SiTailwindcss />
+              </TechIcon>
+            </div>
+          </div>
+
+          {/* INFRA */}
+          <div>
+            <h3 className="text-sm tracking-widest text-zinc-400">
+              INFRA & DEVOPS
+            </h3>
+            <div className="mt-8 flex flex-wrap justify-center gap-x-10 gap-y-8">
+              <TechIcon label="Railway">
+                <SiRailway />
+              </TechIcon>
+              <TechIcon label="Vercel">
+                <SiVercel />
+              </TechIcon>
+              <TechIcon label="Render">
+                <SiRender />
+              </TechIcon>
+              <TechIcon label="Docker">
+                <SiDocker />
+              </TechIcon>
+              <TechIcon label="Git">
+                <SiGit />
+              </TechIcon>
+              <TechIcon label="SendGrid">
+                <SiSendgrid />
+              </TechIcon>
+              <TechIcon label="Stripe">
+                <SiStripe />
+              </TechIcon>
+              <TechIcon label="Google Maps API">
+                <SiGooglemaps />
+              </TechIcon>
+            </div>
+          </div>
         </section>
       </main>
     </div>
   );
 }
-
