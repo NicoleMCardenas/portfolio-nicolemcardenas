@@ -65,7 +65,7 @@ export default function HomePage() {
                 href="/projects"
                 className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                Learn more ↓
+                Discover more ↓
               </Link>
             </div>
           </div>
