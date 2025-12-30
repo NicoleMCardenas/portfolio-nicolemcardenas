@@ -24,6 +24,12 @@ import {
   SiRender,
 } from "react-icons/si";
 
+type Props = {
+  searchParams?: {
+    lang?: string;
+  };
+};
+
 function TechIcon({
   icon,
   label,
@@ -39,7 +45,53 @@ function TechIcon({
   );
 }
 
-export default function HomePage() {
+export default function HomePage({ searchParams }: Props) {
+  const lang = searchParams?.lang === "es" ? "es" : "en";
+
+  const t = {
+    navProjects: lang === "es" ? "Proyectos" : "Projects",
+    heroRole: lang === "es" ? "Desarrolladora Full-Stack" : "Full-Stack Developer",
+    heroSub:
+      lang === "es"
+        ? "Backend Specialist · Arquitectura de APIs · Marketing & Diseño Estratégico e Innovación"
+        : "Backend Specialist · API Architecture · Marketing & Innovation Strategy",
+    ctaPrimary:
+      lang === "es" ? "Construyamos algo juntos 🚀" : "Let’s Build Something Together 🚀",
+    ctaDiscover:
+      lang === "es" ? "Descubre más ↓" : "Discover more ↓",
+
+    aboutTitle: lang === "es" ? "Sobre mí" : "About Me",
+    aboutText:
+      lang === "es"
+        ? `Soy una desarrolladora que combina precisión técnica con pensamiento estratégico y ejecución creativa.
+
+Mi enfoque es construir APIs escalables, seguras y bien diseñadas usando NestJS, TypeScript y PostgreSQL — siempre buscando arquitectura limpia y sistemas mantenibles.
+
+Además del código, aporto experiencia en marketing y en Diseño Estratégico e Innovación, ayudando a transformar productos en experiencias digitales significativas.
+
+Para mí, la tecnología no es solo funcionalidad: es crear impacto, conexión y crecimiento con cada línea de código.`
+        : `I’m a developer who blends technical precision with strategic thinking and creative execution.
+
+My focus is on building scalable, secure, and well-designed APIs using NestJS, TypeScript, and PostgreSQL — always aiming for clean architecture and maintainable systems.
+
+Beyond code, I bring a background in marketing and innovation strategy, helping transform technical products into meaningful digital experiences.
+
+For me, technology isn’t just about functionality — it’s about creating impact, connection, and growth through every line of code.`,
+    contactMe: lang === "es" ? "Contáctame" : "Contact me",
+    stackBtn: lang === "es" ? "Stack" : "Stack",
+
+    stackTitle: lang === "es" ? "TECNOLOGÍAS CON LAS QUE TRABAJO" : "TECHNOLOGIES I WORK WITH",
+  };
+
+  // helper para conservar lang en links internos
+  const withLang = (path: string) => {
+    const hasQuery = path.includes("?");
+    return `${path}${hasQuery ? "&" : "?"}lang=${lang}`;
+  };
+
+  const switchTo = lang === "es" ? "en" : "es";
+  const switchLabel = lang === "es" ? "English" : "Español";
+
   return (
     <>
       {/* HERO */}
@@ -52,23 +104,33 @@ export default function HomePage() {
 
         {/* NAV */}
         <header className="mx-auto max-w-7xl px-6 pt-6 lg:px-8">
-          <nav className="flex items-center gap-6 text-sm text-zinc-300">
+          <nav className="flex items-center justify-between">
+            <div className="flex items-center gap-6 text-sm text-zinc-300">
+              <Link
+                href="https://www.linkedin.com/in/nicolemcardenas/"
+                target="_blank"
+                className="hover:text-white transition"
+              >
+                LinkedIn
+              </Link>
+              <Link
+                href="https://github.com/NicoleMCardenas"
+                target="_blank"
+                className="hover:text-white transition"
+              >
+                GitHub
+              </Link>
+              <Link href={withLang("/projects")} className="hover:text-white transition">
+                {t.navProjects}
+              </Link>
+            </div>
+
+            {/* Language toggle */}
             <Link
-              href="https://www.linkedin.com/in/nicolemcardenas/"
-              target="_blank"
-              className="hover:text-white transition"
+              href={`/?lang=${switchTo}`}
+              className="text-sm text-zinc-300 hover:text-white transition border border-white/10 bg-white/5 px-3 py-1.5 rounded-lg"
             >
-              LinkedIn
-            </Link>
-            <Link
-              href="https://github.com/NicoleMCardenas"
-              target="_blank"
-              className="hover:text-white transition"
-            >
-              GitHub
-            </Link>
-            <Link href="/projects" className="hover:text-white transition">
-              Projects
+              {switchLabel}
             </Link>
           </nav>
         </header>
@@ -80,38 +142,31 @@ export default function HomePage() {
             <div className="max-w-2xl">
               <h1 className="font-display text-5xl sm:text-6xl md:text-7xl font-bold leading-tight text-white">
                 <span className="block animate-name">Nicole Morelos</span>
-                <span className="block animate-name animate-name-delay">
-                  Cárdenas
-                </span>
+                <span className="block animate-name animate-name-delay">Cárdenas</span>
               </h1>
 
-              <p className="mt-6 text-xl font-semibold text-white">
-                Full-Stack Developer
-              </p>
+              <p className="mt-6 text-xl font-semibold text-white">{t.heroRole}</p>
 
-              <p className="mt-2 max-w-xl text-sm text-zinc-400">
-                Backend Specialist · API Architecture · Marketing & Innovation
-                Strategy
-              </p>
+              <p className="mt-2 max-w-xl text-sm text-zinc-400">{t.heroSub}</p>
 
               <div className="mt-8 flex flex-wrap gap-3">
                 <Link
-                  href="/contact"
+                  href={withLang("/contact")}
                   className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-black hover:bg-zinc-100 transition"
                 >
-                  Let’s Build Something Together 🚀
+                  {t.ctaPrimary}
                 </Link>
 
                 <a
                   href="#about"
                   className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
                 >
-                  About me ↓
+                  {t.ctaDiscover}
                 </a>
               </div>
             </div>
 
-            {/* Right: Laptop image */}
+            {/* Right: Laptop image (Unsplash) */}
             <div className="relative flex justify-center">
               <div className="w-[320px] sm:w-[420px] md:w-[520px] rounded-2xl border border-white/10 bg-white/5 p-3 shadow-xl">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-xl">
@@ -148,46 +203,37 @@ export default function HomePage() {
 
           <div>
             <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4">
-              About Me
+              {t.aboutTitle}
             </h3>
 
-            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify">
-              I’m a developer who blends technical precision with strategic
-              thinking and creative execution.
-              <br />
-              <br />
-              My focus is on building{" "}
-              <strong>scalable, secure, and well-designed APIs</strong> using{" "}
-              <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming
-              for clean architecture and maintainable systems.
-              <br />
-              <br />
-              Beyond code, I bring a background in{" "}
-              <strong>marketing and innovation strategy</strong>, helping
-              transform technical products into meaningful digital experiences.
-              <br />
-              <br />
-              For me, technology isn’t just about functionality — it’s about{" "}
-              <strong>creating impact, connection, and growth</strong> through
-              every line of code.
+            <p className="text-base sm:text-lg text-zinc-300 leading-relaxed text-justify whitespace-pre-line">
+              {t.aboutText}
             </p>
 
-            <div className="mt-6">
+            {/* Buttons: Contact + Stack */}
+            <div className="mt-6 flex flex-wrap gap-3">
               <Link
-                href="/contact"
+                href={withLang("/contact")}
                 className="inline-block px-5 py-2.5 border border-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-900/40 transition"
               >
-                Contact me
+                {t.contactMe}
               </Link>
+
+              <a
+                href="#stack"
+                className="inline-block px-5 py-2.5 border border-zinc-700 text-zinc-200 rounded-md hover:bg-zinc-900/40 transition"
+              >
+                {t.stackBtn}
+              </a>
             </div>
           </div>
         </div>
       </section>
 
       {/* TECH STACK */}
-      <section className="mx-auto max-w-6xl px-6 py-20">
+      <section id="stack" className="mx-auto max-w-6xl px-6 py-20">
         <h3 className="mb-10 text-center text-sm tracking-widest text-zinc-400">
-          TECHNOLOGIES I WORK WITH
+          {t.stackTitle}
         </h3>
 
         <div className="grid grid-cols-3 gap-y-10 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
@@ -212,7 +258,7 @@ export default function HomePage() {
           <TechIcon icon={<SiSendgrid />} label="SendGrid" />
           <TechIcon icon={<SiStripe />} label="Stripe" />
 
-          {/* MercadoPago: texto simple */}
+          {/* MercadoPago: texto simple para evitar icon raro */}
           <TechIcon icon={<span className="text-xl font-semibold">MP</span>} label="MercadoPago" />
 
           <TechIcon icon={<SiGooglemaps />} label="Google Maps API" />
@@ -223,4 +269,3 @@ export default function HomePage() {
     </>
   );
 }
-
