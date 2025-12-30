@@ -99,7 +99,7 @@ export default function HomePage() {
                 href="#about"
                 className="rounded-md border border-zinc-700 px-6 py-3 text-sm text-zinc-200 hover:bg-zinc-900/40 transition"
               >
-                Learn more ↓
+                About me ↓
               </a>
             </div>
           </div>
