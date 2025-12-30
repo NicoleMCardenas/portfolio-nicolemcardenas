@@ -42,15 +42,16 @@ export default function HomePage() {
           <div className="max-w-2xl">
             <h1 className="font-display text-5xl sm:text-6xl font-bold leading-tight">
               <span className="block animate-name">Nicole Morelos</span>
-              <span className="block animate-name delay">Cárdenas</span>
+              <span className="block animate-name animate-name-delay">
+                Cárdenas
+              </span>
             </h1>
 
-            <p className="mt-6 text-xl font-semibold">
-              Full-Stack Developer
-            </p>
+            <p className="mt-6 text-xl font-semibold">Full-Stack Developer</p>
 
             <p className="mt-2 max-w-xl text-sm text-zinc-400">
-              Backend Specialist · API Architecture · Marketing & Innovation Strategy
+              Backend Specialist · API Architecture · Marketing & Innovation
+              Strategy
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
@@ -65,7 +66,7 @@ export default function HomePage() {
                 href="/projects"
                 className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold hover:bg-white/10 transition"
               >
-                Discover more ↓
+                Learn more ↓
               </Link>
             </div>
           </div>
@@ -91,7 +92,15 @@ export default function HomePage() {
           {[
             {
               title: "BACKEND & CORE",
-              items: ["NestJS", "Node.js", "Express.js", "TypeORM", "TypeScript", "JWT", "Swagger"],
+              items: [
+                "NestJS",
+                "Node.js",
+                "Express.js",
+                "TypeORM",
+                "TypeScript",
+                "JWT",
+                "Swagger",
+              ],
             },
             {
               title: "DATABASES",
@@ -103,7 +112,15 @@ export default function HomePage() {
             },
             {
               title: "INFRA & DEVOPS",
-              items: ["Railway", "Vercel", "Docker", "Git", "Stripe", "MercadoPago", "SendGrid"],
+              items: [
+                "Railway",
+                "Vercel",
+                "Docker",
+                "Git",
+                "Stripe",
+                "MercadoPago",
+                "SendGrid",
+              ],
             },
           ].map((group) => (
             <div key={group.title}>
@@ -121,25 +138,6 @@ export default function HomePage() {
           ))}
         </section>
       </main>
-
-      {/* Name animation */}
-      <style jsx global>{`
-        .animate-name {
-          opacity: 0;
-          transform: translateY(12px);
-          animation: fadeUp 700ms ease forwards;
-        }
-        .animate-name.delay {
-          animation-delay: 120ms;
-        }
-        @keyframes fadeUp {
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
     </div>
   );
 }
-
