@@ -7,32 +7,14 @@ type Props = {
   quantity?: number;
 };
 
-type Dot = {
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  r: number;
-  a: number;
-};
-
-export default function Particles({ className, quantity = 120 }: Props) {
+// Partículas blancas en movimiento (canvas) — NO depende de librerías externas
+export default function Particles({ className = "", quantity = 120 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const dots = useMemo<Dot[]>(() => {
-    const arr: Dot[] = [];
-    for (let i = 0; i < quantity; i++) {
-      arr.push({
-        x: Math.random(),
-        y: Math.random(),
-        vx: (Math.random() - 0.5) * 0.08, // speed
-        vy: (Math.random() - 0.5) * 0.08,
-        r: 0.8 + Math.random() * 1.6, // radius
-        a: 0.25 + Math.random() * 0.55, // alpha
-      });
-    }
-    return arr;
-  }, [quantity]);
+  const prefersReducedMotion = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -41,83 +23,98 @@ export default function Particles({ className, quantity = 120 }: Props) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    let w = 0;
-    let h = 0;
     let raf = 0;
+
+    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    const state = {
+      w: 0,
+      h: 0,
+    };
+
+    type Dot = {
+      x: number;
+      y: number;
+      r: number;
+      vx: number;
+      vy: number;
+      a: number; // alpha
+    };
+
+    const rand = (min: number, max: number) => Math.random() * (max - min) + min;
+
+    let dots: Dot[] = [];
 
     const resize = () => {
       const parent = canvas.parentElement;
-      if (!parent) return;
+      const width = parent?.clientWidth ?? window.innerWidth;
+      const height = parent?.clientHeight ?? window.innerHeight;
 
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      w = parent.clientWidth;
-      h = parent.clientHeight;
+      state.w = width;
+      state.h = height;
 
-      canvas.width = Math.floor(w * dpr);
-      canvas.height = Math.floor(h * dpr);
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Re-seed particles on resize to keep density consistent
+      dots = new Array(quantity).fill(0).map(() => ({
+        x: rand(0, width),
+        y: rand(0, height),
+        r: rand(0.8, 2.1),
+        vx: rand(-0.18, 0.18),
+        vy: rand(-0.12, 0.22),
+        a: rand(0.25, 0.8),
+      }));
     };
 
     const step = () => {
-      ctx.clearRect(0, 0, w, h);
+      ctx.clearRect(0, 0, state.w, state.h);
 
-      // draw
-      for (const p of dots) {
-        // move (normalized -> pixels)
-        p.x += p.vx / 60;
-        p.y += p.vy / 60;
+      // subtle vignette / depth
+      // (keep it very light so the gradient can do the main work)
+      for (const d of dots) {
+        d.x += d.vx;
+        d.y += d.vy;
 
-        // wrap
-        if (p.x < 0) p.x = 1;
-        if (p.x > 1) p.x = 0;
-        if (p.y < 0) p.y = 1;
-        if (p.y > 1) p.y = 0;
-
-        const px = p.x * w;
-        const py = p.y * h;
+        if (d.x < -10) d.x = state.w + 10;
+        if (d.x > state.w + 10) d.x = -10;
+        if (d.y < -10) d.y = state.h + 10;
+        if (d.y > state.h + 10) d.y = -10;
 
         ctx.beginPath();
-        ctx.fillStyle = `rgba(255,255,255,${p.a})`;
-        ctx.arc(px, py, p.r, 0, Math.PI * 2);
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${d.a})`;
         ctx.fill();
       }
 
-      // subtle connecting lines
-      for (let i = 0; i < dots.length; i++) {
-        for (let j = i + 1; j < dots.length; j++) {
-          const a = dots[i];
-          const b = dots[j];
-          const dx = (a.x - b.x) * w;
-          const dy = (a.y - b.y) * h;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-
-          if (dist < 110) {
-            const alpha = 0.08 * (1 - dist / 110);
-            ctx.strokeStyle = `rgba(255,255,255,${alpha})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(a.x * w, a.y * h);
-            ctx.lineTo(b.x * w, b.y * h);
-            ctx.stroke();
-          }
-        }
-      }
-
-      raf = requestAnimationFrame(step);
+      raf = window.requestAnimationFrame(step);
     };
 
     resize();
-    step();
+    const onResize = () => resize();
+    window.addEventListener("resize", onResize);
 
-    window.addEventListener("resize", resize);
+    if (!prefersReducedMotion) {
+      raf = window.requestAnimationFrame(step);
+    } else {
+      // If reduced motion, render once
+      ctx.clearRect(0, 0, state.w, state.h);
+      for (const d of dots) {
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${d.a})`;
+        ctx.fill();
+      }
+    }
+
     return () => {
-      window.removeEventListener("resize", resize);
-      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+      if (raf) window.cancelAnimationFrame(raf);
     };
-  }, [dots]);
+  }, [quantity, prefersReducedMotion]);
 
   return (
     <canvas
