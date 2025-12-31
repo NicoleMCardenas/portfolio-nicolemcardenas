@@ -96,7 +96,7 @@ function t(lang: "en" | "es") {
 function TechIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
   return (
     <div className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition">
-      <div className="text-3xl">{icon}</div>
+      <div className="text-3xl text-zinc-200">{icon}</div>
       <span className="text-xs text-zinc-400">{label}</span>
     </div>
   );
