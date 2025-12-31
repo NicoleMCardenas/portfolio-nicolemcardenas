@@ -21,6 +21,11 @@ import {
   SiVercel,
   SiGooglemaps,
   SiRender,
+  SiPostman,
+  SiVite,
+  SiTypeorm,
+  SiCloudinary,
+  SiGooglecalendar,
 } from "react-icons/si";
 
 type HomeProps = {
@@ -72,12 +77,12 @@ function t(lang: "en" | "es") {
         maintainable systems.
         <br />
         <br />
-        Beyond code, I bring a background in <strong>marketing</strong> (bachelor's degree) and{" "}
-        <strong>strategic design & innovation</strong> (master's degree), helping transform technical products
+        Beyond code, I bring a background in <strong>marketing</strong> (bachelor&apos;s degree) and{" "}
+        <strong>strategic design & innovation</strong> (master&apos;s degree), helping transform technical products
         into holistic and meaningful digital experiences.
         <br />
         <br />
-        For me, technology isn’t just about functionality — it’s about{" "}
+        For me, technology isn&apos;t just about functionality — it&apos;s about{" "}
         <strong>creating impact, connection, and growth</strong> through every line of code.
       </>
     ),
@@ -93,11 +98,21 @@ function t(lang: "en" | "es") {
   };
 }
 
-function TechIcon({ icon, label }: { icon: React.ReactNode; label: string }) {
+function TechIcon({
+  icon,
+  label,
+  color,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  color: string;
+}) {
   return (
-    <div className="flex flex-col items-center gap-2 opacity-80 hover:opacity-100 transition">
-      <div className="text-3xl text-zinc-200">{icon}</div>
-      <span className="text-xs text-zinc-400">{label}</span>
+    <div className="group flex flex-col items-center gap-2 transition">
+      <div className={`text-3xl text-zinc-300 transition-colors duration-300 ${color}`}>
+        {icon}
+      </div>
+      <span className="text-xs text-zinc-400 text-center">{label}</span>
     </div>
   );
 }
@@ -106,7 +121,6 @@ export default function HomePage({ searchParams }: HomeProps) {
   const lang: "en" | "es" = searchParams?.lang === "es" ? "es" : "en";
   const copy = t(lang);
 
-  // toggle lang preserving route (home)
   const toggleHref = lang === "es" ? "/?lang=en" : "/?lang=es";
 
   return (
@@ -136,7 +150,7 @@ export default function HomePage({ searchParams }: HomeProps) {
           </Link>
         </nav>
 
-        {/* Language toggle (top-right) */}
+        {/* Language toggle */}
         <div className="absolute top-5 right-6 z-20">
           <Link href={toggleHref} className="btn-ghost inline-flex items-center gap-2 px-4 py-2">
             {copy.toggleLabel}
@@ -159,15 +173,12 @@ export default function HomePage({ searchParams }: HomeProps) {
             </h1>
 
             <h2 className="mt-4 text-2xl font-semibold text-white">{copy.role}</h2>
-
             <p className="mt-2 text-sm text-zinc-400 max-w-xl">{copy.subtitle}</p>
 
-            {/* Buttons */}
             <div className="mt-8 flex flex-wrap gap-4">
               <Link href="/contact" className="btn-primary">
                 {copy.cta}
               </Link>
-
               <a href="#about" className="btn-ghost">
                 {copy.learnMore}
               </a>
@@ -220,7 +231,6 @@ export default function HomePage({ searchParams }: HomeProps) {
               <Link href="/contact" className="btn-ghost">
                 {copy.contactMe}
               </Link>
-
               <a href="#stack" className="btn-ghost">
                 {copy.stackBtn}
               </a>
@@ -234,35 +244,84 @@ export default function HomePage({ searchParams }: HomeProps) {
         <h3 className="mb-4 text-center text-sm tracking-widest text-zinc-400">{copy.stackTitle}</h3>
         <p className="mb-10 text-center text-zinc-500 text-sm">{copy.stackSubtitle}</p>
 
-        <div className="grid grid-cols-3 gap-y-10 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
-          <TechIcon icon={<SiNestjs />} label="NestJS" />
-          <TechIcon icon={<SiNodedotjs />} label="Node.js" />
-          <TechIcon icon={<SiExpress />} label="Express" />
-          <TechIcon icon={<SiTypescript />} label="TypeScript" />
-          <TechIcon icon={<SiJavascript />} label="JavaScript" />
-          <TechIcon icon={<SiPostgresql />} label="PostgreSQL" />
+        <div className="grid grid-cols-3 gap-y-12 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
+          {/* BACKEND */}
+          <TechIcon icon={<SiNestjs />} label="NestJS" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiNodedotjs />} label="Node.js" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiExpress />} label="Express.js" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiTypescript />} label="TypeScript" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiJavascript />} label="JavaScript" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiPostgresql />} label="PostgreSQL" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiTypeorm />} label="TypeORM" color="group-hover:text-cyan-400" />
 
-          <TechIcon icon={<SiReact />} label="React" />
-          <TechIcon icon={<SiNextdotjs />} label="Next.js" />
-          <TechIcon icon={<SiTailwindcss />} label="TailwindCSS" />
+          {/* APIs & TOOLS */}
+          <TechIcon icon={<SiPostman />} label="Postman" color="group-hover:text-violet-400" />
+          <TechIcon icon={<SiSwagger />} label="Swagger / OpenAPI" color="group-hover:text-violet-400" />
+          <TechIcon icon={<SiJsonwebtokens />} label="JWT" color="group-hover:text-violet-400" />
 
-          <TechIcon icon={<SiDocker />} label="Docker" />
-          <TechIcon icon={<SiGit />} label="Git" />
+          {/* FRONTEND */}
+          <TechIcon icon={<SiReact />} label="React" color="group-hover:text-sky-400" />
+          <TechIcon icon={<SiNextdotjs />} label="Next.js" color="group-hover:text-sky-400" />
+          <TechIcon icon={<SiVite />} label="Vite" color="group-hover:text-sky-400" />
+          <TechIcon icon={<SiTailwindcss />} label="Tailwind CSS" color="group-hover:text-sky-400" />
 
-          <TechIcon icon={<SiSwagger />} label="Swagger" />
-          <TechIcon icon={<SiJsonwebtokens />} label="JWT" />
-          <TechIcon icon={<SiSendgrid />} label="SendGrid" />
-          <TechIcon icon={<SiStripe />} label="Stripe" />
+          {/* DEVOPS */}
+          <TechIcon icon={<SiDocker />} label="Docker" color="group-hover:text-blue-400" />
+          <TechIcon icon={<SiGit />} label="Git" color="group-hover:text-blue-400" />
 
-          <TechIcon icon={<span className="text-xl font-semibold">MP</span>} label="MercadoPago" />
-          <TechIcon icon={<SiGooglemaps />} label="Google Maps API" />
+          {/* PAYMENTS & EMAIL */}
+          <TechIcon icon={<SiStripe />} label="Stripe" color="group-hover:text-emerald-400" />
+          <TechIcon
+            icon={<span className="text-xl font-semibold text-zinc-300 group-hover:text-emerald-400 transition-colors duration-300">MP</span>}
+            label="MercadoPago"
+            color=""
+          />
+          <TechIcon icon={<SiSendgrid />} label="SendGrid" color="group-hover:text-emerald-400" />
 
-          <TechIcon icon={<span className="text-xl font-semibold">NEON</span>} label="Neon DB" />
-          <TechIcon icon={<SiRailway />} label="Railway" />
-          <TechIcon icon={<SiVercel />} label="Vercel" />
-          <TechIcon icon={<SiRender />} label="Render" />
+          {/* GOOGLE */}
+          <TechIcon icon={<SiGooglemaps />} label="Google Maps API" color="group-hover:text-amber-400" />
+          <TechIcon icon={<SiGooglecalendar />} label="Google Calendar API" color="group-hover:text-amber-400" />
+
+          {/* CLOUD / DB */}
+          <TechIcon icon={<SiCloudinary />} label="Cloudinary" color="group-hover:text-fuchsia-400" />
+          <TechIcon
+            icon={<span className="text-xl font-bold tracking-wide text-zinc-300 group-hover:text-fuchsia-400 transition-colors duration-300">NEON</span>}
+            label="Neon DB"
+            color=""
+          />
+
+          {/* DEPLOY */}
+          <TechIcon icon={<SiRailway />} label="Railway" color="group-hover:text-lime-400" />
+          <TechIcon icon={<SiRender />} label="Render" color="group-hover:text-lime-400" />
+          <TechIcon icon={<SiVercel />} label="Vercel" color="group-hover:text-lime-400" />
+        </div>
+
+        {/* BADGES */}
+        <div className="mt-14 flex flex-wrap justify-center gap-3">
+          {[
+            "RESTful APIs",
+            "JWT Authentication",
+            "Role-based access control (RBAC)",
+            "CRON jobs",
+            "SMTP / Email services",
+            "Payment integrations",
+            "Database modeling",
+            "Entity relationships (1-N, N-N)",
+            "Migrations",
+            "API consumption",
+            "JSX / TSX",
+            "Environment variables (.env)",
+          ].map((skill) => (
+            <span
+              key={skill}
+              className="rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs text-zinc-300 backdrop-blur-sm"
+            >
+              {skill}
+            </span>
+          ))}
         </div>
       </section>
     </>
   );
 }
+
