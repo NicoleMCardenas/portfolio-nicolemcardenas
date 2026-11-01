@@ -250,6 +250,15 @@ export default function HomePage({ searchParams }: HomeProps) {
 
         <div className="grid grid-cols-3 gap-y-12 sm:grid-cols-4 md:grid-cols-6 justify-items-center">
           {/* BACKEND */}
+          {/* KAIRO — BACKEND */}
+          <TechIcon icon={<SiPython />} label="Python" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiFastapi />} label="FastAPI" color="group-hover:text-cyan-400" />
+          <TechIcon icon={<SiSqlalchemy />} label="SQLAlchemy" color="group-hover:text-cyan-400" />
+          <TechIcon
+            icon={<span className="text-lg font-semibold">A</span>}
+            label="Alembic"
+            color="group-hover:text-cyan-400"
+          />
           <TechIcon icon={<SiNestjs />} label="NestJS" color="group-hover:text-cyan-400" />
           <TechIcon icon={<SiNodedotjs />} label="Node.js" color="group-hover:text-cyan-400" />
           <TechIcon icon={<SiExpress />} label="Express.js" color="group-hover:text-cyan-400" />
@@ -287,6 +296,7 @@ export default function HomePage({ searchParams }: HomeProps) {
           <TechIcon icon={<SiGooglecalendar />} label="Google Calendar API" color="group-hover:text-amber-400" />
 
           {/* CLOUD / DB */}
+          <TechIcon icon={<SiSupabase />} label="Supabase" color="group-hover:text-fuchsia-400" />
           <TechIcon icon={<SiCloudinary />} label="Cloudinary" color="group-hover:text-fuchsia-400" />
           <TechIcon
             icon={<span className="text-xl font-bold tracking-wide text-zinc-300 group-hover:text-fuchsia-400 transition-colors duration-300">NEON</span>}
