@@ -52,44 +52,62 @@ function t(lang: "en" | "es") {
     cta: isEs ? "Construyamos algo juntos 🚀" : "Let’s Build Something Together 🚀",
     learnMore: isEs ? "Descubrir más ↓" : "Learn more ↓",
 
+
     // sections
     aboutTitle: isEs ? "Sobre mí" : "About Me",
     aboutBody: isEs ? (
       <>
-        Soy una desarrolladora que combina precisión técnica con pensamiento estratégico y ejecución creativa.
+        Soy una desarrolladora full stack con enfoque en backend que combina precisión técnica,
+        pensamiento estratégico y ejecución creativa.
         <br />
         <br />
-        Me enfoco en construir <strong>APIs escalables, seguras y bien diseñadas</strong> con{" "}
-        <strong>NestJS, TypeScript y PostgreSQL</strong>, cuidando la arquitectura limpia y la mantenibilidad.
+        Me especializo en construir <strong>APIs REST, sistemas seguros y aplicaciones escalables</strong>,
+        trabajando con <strong>Python, FastAPI, NestJS, TypeScript y PostgreSQL</strong>,
+        con atención a la arquitectura, la calidad del código y la mantenibilidad.
         <br />
         <br />
-        Además, tengo experiencia en{" "}
-        <strong>marketing (licenciatura) y diseño estratégico e innovación (maestría)</strong>, conectando lo
-        técnico con productos digitales que generan valor real y holístico.
+        Desarrollo soluciones de principio a fin, integrando backend, frontend y bases de datos.
+        En proyectos como <strong>KAIRO</strong>, aplico estas habilidades para transformar
+        información de clientes en herramientas de análisis y gestión que apoyan
+        decisiones de negocio.
         <br />
         <br />
-        Para mí, la tecnología no es solo funcionalidad: es{" "}
-        <strong>impacto, conexión y crecimiento</strong> en cada línea de código.
+        Mi formación en <strong>marketing (licenciatura) y diseño estratégico e innovación (maestría)</strong>{" "}
+        complementa mi perfil técnico, permitiéndome conectar las necesidades del negocio
+        con experiencias digitales funcionales y centradas en las personas.
+        <br />
+        <br />
+        Creo en desarrollar tecnología que no solo funcione bien, sino que genere{" "}
+        <strong>valor, impacto y oportunidades de crecimiento</strong>.
       </>
     ) : (
       <>
-        I’m a developer who blends technical precision with strategic thinking and creative execution.
+        I’m a backend-focused full-stack developer who combines technical precision,
+        strategic thinking, and creative execution.
         <br />
         <br />
-        My focus is on building <strong>scalable, secure, and well-designed APIs</strong> using{" "}
-        <strong>NestJS, TypeScript, and PostgreSQL</strong> — always aiming for clean architecture and
-        maintainable systems.
+        I focus on building <strong>REST APIs, secure systems, and scalable applications</strong>{" "}
+        using <strong>Python, FastAPI, NestJS, TypeScript, and PostgreSQL</strong>,
+        with an emphasis on architecture, code quality, and maintainability.
         <br />
         <br />
-        Beyond code, I bring a background in <strong>marketing</strong> (bachelor&apos;s degree) and{" "}
-        <strong>strategic design & innovation</strong> (master&apos;s degree), helping transform technical products
-        into holistic and meaningful digital experiences.
+        I build end-to-end solutions, integrating backend, frontend, and databases.
+        Through projects like <strong>KAIRO</strong>, I apply these skills to turn
+        customer information into analytics and management tools that support
+        data-driven business decisions.
         <br />
         <br />
-        For me, technology isn&apos;t just about functionality — it&apos;s about{" "}
-        <strong>creating impact, connection, and growth</strong> through every line of code.
+        My background in <strong>marketing</strong> (bachelor&apos;s degree) and{" "}
+        <strong>strategic design & innovation</strong> (master&apos;s degree)
+        complements my technical expertise, helping me connect business needs
+        with functional, human-centered digital experiences.
+        <br />
+        <br />
+        I believe technology should do more than work well — it should create{" "}
+        <strong>value, impact, and opportunities for growth</strong>.
       </>
     ),
+
 
     contactMe: isEs ? "Contáctame →" : "Contact me →",
     stackBtn: isEs ? "Tecnologías →" : "Stack →",
