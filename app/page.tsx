@@ -26,6 +26,10 @@ import {
   SiTypeorm,
   SiCloudinary,
   SiGooglecalendar,
+  SiPython,
+  SiFastapi,
+  SiSqlalchemy,
+  SiSupabase,
 } from "react-icons/si";
 
 type HomeProps = {
